@@ -1,0 +1,32 @@
+{
+    "name": "Stoic Focus",
+    "version": "1.0",
+    "description": "Add notes to remind yourself why a site is bad",
+    "permissions": ["declarativeContent", "storage", "activeTab", "tabs"],
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["contentScript.js"]
+        }
+      ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+      },
+    "page_action": {
+      "default_popup": "views/popup.html",
+      "default_icon": {
+        "16": "images/marcus_16.png",
+        "32": "images/marcus_32.png",
+        "48": "images/marcus_64.png",
+        "128": "images/marcus_128.png"
+      }
+    },
+    "icons": {
+        "16": "images/marcus_16.png",
+        "32": "images/marcus_32.png",
+        "48": "images/marcus_64.png",
+        "128": "images/marcus_128.png"
+    },
+    "manifest_version": 2
+  }

@@ -1,0 +1,50 @@
+// "content_scripts": [
+//         {
+//             "matches": [
+//                 "developer.chrome.com"
+//             ],
+//             "js": "contentScript.js"
+//         }
+//     ],
+
+
+ "content_scripts": [
+   {
+     "matches": ["http://*.nytimes.com/*"],
+     "css": ["myStyles.css"],
+     "js": ["contentScript.js"]
+   }
+ ],
+
+
+// {
+//     "trailingComma": "es5",
+//     "tabWidth": 4,
+//     "semi": false,
+//     "singleQuote": true,
+//     "printWidth": 120
+//   }
+
+TODO:
+delete / edit btn on exsisting ones
+change state of current UI dropdown on add and on remove
+ingocnito
+port to firefox
+more customization of if it is a positive msg or if it's a warning msg
+add in imgs of stoic artwork or poems or something
+
+styling
+ 
+
+api im messing w/ 
+ https://collectionapi.metmuseum.org/public/collection/v1/objects
+ https://collectionapi.metmuseum.org/public/collection/v1/objects/[objectID]
+
+
+ ["https://some-random-api.ml/img/red_panda",
+ "https://some-random-api.ml/img/panda",
+ "https://some-random-api.ml/img/koala",
+ "https://some-random-api.ml/img/fox",
+ "https://some-random-api.ml/img/cat",
+ "https://some-random-api.ml/img/dog"]
+
