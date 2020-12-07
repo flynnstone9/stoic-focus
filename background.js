@@ -37,7 +37,20 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                 for (let i=0; i < sites.length; i++) {
                     let site = sites[i]
                     if (tablink.includes(site.url)) {
-                        chrome.tabs.sendMessage(tabId, site)
+
+                        //add a visit to site
+                        let updatedSite = {
+                            ...site, 
+                            visits: site.visits+1 
+                        }
+
+                        let updatedSites = sites.map(s => s.url === site.url ? updatedSite : s)
+                
+                        chrome.storage.sync.set({'sites': updatedSites}, function() {
+                            console.log(updatedSites);
+                        });
+
+                        chrome.tabs.sendMessage(tabId, updatedSite)
                         return
                     } 
                 }

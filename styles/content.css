@@ -1,0 +1,117 @@
+.content_stoicFocus {
+    background: #222;
+    display: flex;
+    position: fixed;
+    margin: 0 auto;
+    box-sizing: border-box;
+    /* top: 0; */
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    font-size: 1rem;
+    font-family: system-ui, sans-serif;
+    
+    border: 3px solid #f86fa6;
+    color: #777;
+    z-index: 2147483647 !important;
+    opacity: 0.95;    
+}
+
+.content_stoicFocus__hidden {
+  opacity: 0;
+  transition: opacity 2s ease-in;
+}
+
+.content_stoicFocus__msgInner {
+  /* padding:100px; */
+  width: 100%;
+}
+
+.content_stoicFocus__contentDiv {
+  display: flex;
+  padding:100px;
+  width: 100%
+}
+
+.content__sf__txt {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.content__sf__txt__msg {
+  font-size: 1.5rem;
+  color: #f86fa6;
+}
+
+.content__sf__txt__site {
+  margin: 5px 0px;
+  font-size: 0.8rem;
+}
+
+.content__sf__counterDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: #777;
+  margin-left: auto;
+}
+
+.content__sf__counterDiv__date {
+  display: flex;
+  flex-direction: column;
+}
+
+.content__sf__counterDiv__date__text {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.content__sf__counterDiv__date__date {
+  font-size: 0.7rem;
+  border-bottom: 1px solid #777;
+}
+
+.content__sf__counterDiv__visits {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0;
+  align-items: flex-end;
+  /* text-align: flex-start ; */
+  /* padding: 20px; */
+}
+
+.content__sf__counterDiv__visits_num {
+  font-size: 3rem;
+  color: #999;
+}
+
+.content__sf__counterDiv__visits_text {
+  font-size: 0.7rem;
+  /* border-bottom: 1px solid white; */
+  margin-top: 10px;
+}
+
+.content__sf__timer {
+    font-size: 0.7rem;
+    padding: 10px;
+    letter-spacing: 1px;
+}
+
+.content__sf__timer__time {
+  color: white;
+  opacity: 0.8;
+  font-size: 0.8;
+  text-transform: uppercase;
+  border-bottom: 1px solid white;
+}
+
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-left: 23px solid #f86fa6;
+  border-bottom: 15px solid transparent;
+  opacity: 0.5;
+  margin-top: 11px;
+}

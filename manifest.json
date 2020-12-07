@@ -6,6 +6,7 @@
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
+          "css": ["./styles/content.css"],
           "js": ["contentScript.js"]
         }
       ],
@@ -16,17 +17,20 @@
     "page_action": {
       "default_popup": "views/popup.html",
       "default_icon": {
-        "16": "images/marcus_16.png",
-        "32": "images/marcus_32.png",
-        "48": "images/marcus_64.png",
-        "128": "images/marcus_128.png"
+        "16": "images/stoic16.png",
+        "32": "images/stoic32.png",
+        "48": "images/stoic64.png",
+        "128": "images/stoic128.png"
       }
     },
     "icons": {
-        "16": "images/marcus_16.png",
-        "32": "images/marcus_32.png",
-        "48": "images/marcus_64.png",
-        "128": "images/marcus_128.png"
+        "16": "images/stoic16.png",
+        "32": "images/stoic32.png",
+        "48": "images/stoic64.png",
+        "128": "images/stoic128.png"
     },
+    "web_accessible_resources":[
+      "images/stoic128.png",
+      "views/display.html"],
     "manifest_version": 2
   }

@@ -1,0 +1,89 @@
+body {
+    min-width: 300px;
+    background: #222;
+    border: 3px solid #f86fa6;
+    /* border: 3px solid rgb(241, 40, 208); */
+
+    padding: 20px;
+    color: #777;
+    font-family: system-ui, sans-serif;
+    font-size: 75%;
+  }
+
+  .header__title {
+    color: rgb(204, 204, 204);
+    margin-bottom: 3px;
+    font-size: 0.8rem;
+  }
+
+  .msg {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    line-break: anywhere;
+  }
+
+  .url {
+    margin: 15px 0;
+    line-break: anywhere;
+  }
+
+  .url__status {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    margin-bottom: 8px;
+  }
+
+  .url__status--active {
+    color: #f86fa6;
+    border-bottom: 2px solid #f86fa6;
+  }
+
+  .url__status--notactive {
+    color: #999;
+    border-bottom: 2px solid rgb(36, 240, 213);
+  }
+
+  .url__link {
+    color: #888;
+  }
+
+  .input {
+    margin-top: 15px;
+  }
+
+  .input__title {
+    color: white;
+  }
+
+
+  button {
+    display: inline-block;
+    border: 2px;
+    /* padding: 1rem 2rem; */
+    margin: 0;
+    text-decoration: none;
+    background: #f86fa6;
+    color: #111;
+    font-size: .8rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out,
+      transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  button:hover,
+  button:focus {
+    background: #f0b0c9;
+  }
+
+  button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+  }
+
+  button:active {
+    transform: scale(0.99);
+  }
