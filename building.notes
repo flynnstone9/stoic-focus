@@ -1,19 +1,7 @@
-// {
-//     "trailingComma": "es5",
-//     "tabWidth": 4,
-//     "semi": false,
-//     "singleQuote": true,
-//     "printWidth": 120
-//   }
-
 TODO:
-styling (popout)
-make enter submit form tooo...
-x btn to get rid of content faster
-bug if you made a thing for reddit.com and reddit.com/r/whater - only would work for one - make domains exact matches
-bug width pushing visit counter off to narnia
 port to firefox
 
 NEXTTO:
 add options page... - see all - delete or add there / time of msg variable 
 instead of closing popup on state change - just change the state lol
+timeout feature where you can timeoout a site for 15mins to not notifiy you...

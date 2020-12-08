@@ -1,27 +1,28 @@
 {
     "name": "Stoic Focus",
+    "author": "Connor Flynn",
     "version": "1.0",
-    "description": "Add notes to remind yourself why a site is bad",
+    "description": "Add personal popups on websites to remind yourself why you may want to be mindful of visiting that page.",
     "permissions": ["declarativeContent", "storage", "activeTab", "tabs"],
     "content_scripts": [
         {
-          "matches": ["<all_urls>"],
-          "css": ["./styles/content.css"],
-          "js": ["contentScript.js"]
+            "matches": ["<all_urls>"],
+            "css": ["./styles/content.css"],
+            "js": ["contentScript.js"]
         }
-      ],
+    ],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
-      },
+    },
     "page_action": {
-      "default_popup": "views/popup.html",
-      "default_icon": {
-        "16": "images/stoic16.png",
-        "32": "images/stoic32.png",
-        "48": "images/stoic64.png",
-        "128": "images/stoic128.png"
-      }
+        "default_popup": "views/popup.html",
+        "default_icon": {
+            "16": "images/stoic16.png",
+            "32": "images/stoic32.png",
+            "48": "images/stoic64.png",
+            "128": "images/stoic128.png"
+        }
     },
     "icons": {
         "16": "images/stoic16.png",
@@ -29,8 +30,6 @@
         "48": "images/stoic64.png",
         "128": "images/stoic128.png"
     },
-    "web_accessible_resources":[
-      "images/stoic128.png",
-      "views/display.html"],
+    "web_accessible_resources": ["images/stoic128.png", "views/display.html"],
     "manifest_version": 2
-  }
+}
