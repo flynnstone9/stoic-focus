@@ -1,9 +1,8 @@
 //runs on client every page load
+console.log('stoic focus test content script')
 //listens for matching sites on chrome side // changes page for 10 seconds w message if match
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
-    let msgTime = 10
     // console.log(req, 'this is the req from chrome side')
-
     let body = document.querySelector('body')
 
     let msgDiv = document.createElement('div')
@@ -16,6 +15,8 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     img.src = chrome.runtime.getURL('images/stoic128.png')
     img.width = '128'
     img.height = '128'
+    img.classList = 'content_stoicfocus_img'
+    img.setAttribute('alt', 'stoic focus logo')
 
     let trianlgeDiv = document.createElement('div')
     trianlgeDiv.classList = 'triangle-left'
@@ -38,7 +39,7 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     mainContentDiv.innerHTML += `<div class="content__sf__counterDiv">
                                     <div class="content__sf__counterDiv__visits">
                                         <div class="content__sf__counterDiv__visits_num">${req.visits}</div>
-                                        <div class="content__sf__counterDiv__visits_text"># of visits</div>
+                                        <div class="content__sf__counterDiv__visits_text"># of visits since</div>
                                     </div>
                                     <div class="content__sf__counterDiv__date">
                                         <div class="content__sf__counterDiv__date__text">
@@ -55,23 +56,24 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     timerDiv.id = 'content__sf__timer'
     timerDiv.classList = 'content__sf__timer'
 
+    let msgTime = 10
     let timer = setInterval(myTimer, 1000)
     function myTimer() {
         if (msgTime <= 0) {
             clearInterval(timer)
         }
-        document.getElementById(
+        document.getElementsByClassName(
             'content__sf__timer'
-        ).innerHTML = `Disappearing in <span class="content__sf__timer__time">${msgTime} seconds</span>`
+        )[0].innerHTML = `Disappearing in <span class="content__sf__timer__time">${msgTime} seconds</span>`
         msgTime--
     }
 
     let closeBtn = document.createElement('button')
     closeBtn.innerHTML = '[X]'
     closeBtn.classList = 'close__btn'
+
     closeBtn.onclick = function (e) {
         e.preventDefault()
-        console.log('close')
         msgDiv.style.display = 'none'
     }
 

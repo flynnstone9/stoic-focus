@@ -5,18 +5,28 @@ chrome.runtime.onInstalled.addListener(function () {
         console.log('Sites has been set.')
     })
 
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-        //making ext work on all webpages
-        chrome.declarativeContent.onPageChanged.addRules([
-            {
-                conditions: [
-                    new chrome.declarativeContent.PageStateMatcher({
-                        // pageUrl: {hostEquals: 'developer.chrome.com'},
-                    }),
-                ],
-                actions: [new chrome.declarativeContent.ShowPageAction()],
-            },
-        ])
+    // chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+    //     //making ext work on all webpages
+    //     chrome.declarativeContent.onPageChanged.addRules([
+    //         {
+    //             conditions: [
+    //                 new chrome.declarativeContent.PageStateMatcher({
+    //                     // pageUrl: {hostEquals: 'developer.chrome.com'},
+    //                 }),
+    //             ],
+    //             actions: [new chrome.declarativeContent.ShowPageAction()],
+    //         },
+    //     ])
+    // })
+
+    //above code doesn't work for firefox
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+        chrome.pageAction.show(tabId)
+        // if (changeInfo.status === 'complete') {
+        //     chrome.pageAction.show(tabId)
+        // } else {
+        //     chrome.pageAction.hide(tabId)
+        // }
     })
 })
 

@@ -1,10 +1,10 @@
 let siteInfo = document.getElementById('siteInfo')
 let isCurrentSiteAlreadyAdded = false
 
-chrome.tabs.getSelected(null, function (tab) {
-    let tablink = tab.url
+chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }, function (tab) {
+    console.log(tab, tab[0], tab.url)
+    let tablink = tab[0].url
     // console.log(tab, tablink, 'tablink')
-
     //set ui based on if msg set for site already
     chrome.storage.sync.get('sites', function (data) {
         let sites = data.sites

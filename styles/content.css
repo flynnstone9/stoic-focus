@@ -54,8 +54,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #777;
+    color: #888;
     margin-left: auto;
+    text-align: right;
 }
 
 .content__sf__counterDiv__date {
@@ -88,19 +89,20 @@
 }
 
 .content__sf__counterDiv__visits_text {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     /* border-bottom: 1px solid white; */
     margin-top: 10px;
+    text-align: right;
 }
 
 .content__sf__timer {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     padding: 0px 10px;
     letter-spacing: 1px;
 }
 
 .content__sf__timer__time {
-    color: #777;
+    color: #888;
     opacity: 0.8;
     font-size: 0.8;
     text-transform: uppercase;
@@ -139,4 +141,9 @@
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.6rem;
+}
+
+.content_stoicfocus_img {
+    width: 128px !important;
+    height: 128px !important;
 }

@@ -1,7 +1,46 @@
 TODO:
-port to firefox
+fix bug with styles
 
 NEXTTO:
-add options page... - see all - delete or add there / time of msg variable 
+add options page... - see all - delete or add there / time of msg variable (light or dark mode)
 instead of closing popup on state change - just change the state lol
 timeout feature where you can timeoout a site for 15mins to not notifiy you...
+
+
+IFRAME CODE:
+// let iframe = document.createElement('iframe')
+    // body.prepend(iframe)
+    // iframe.setAttribute(
+    //     'style',
+    //     'border-style: none; position: absolute;width: 100%; height: 100%;z-index: 2147483647 !important;'
+    // )
+    // iframe.setAttribute('frameborder', '0')
+    // iframe.setAttribute('border', '0')
+    // iframe.setAttribute('cellspacing', '0')
+
+    // var style = document.createElement('link')
+    // style.href = chrome.runtime.getURL('styles/content.css')
+    // style.type = 'text/css'
+    // style.rel = 'stylesheet'
+
+    // var script = iframe.contentWindow.document.createElement('script')
+    // script.type = 'text/javascript'
+    // script.src = chrome.runtime.getURL('services/timer.js')
+    // iframe.contentWindow.document.head.innerHTML += nodeToString(script)
+
+    // iframe.contentDocument.body.innerHTML = nodeToString(msgDiv)
+    // iframe.contentDocument.body.setAttribute('style', 'margin:0')
+    // iframe.contentDocument.head.innerHTML += nodeToString(style)
+
+    // iframe.contentDocument.body.getElementsByClassName('close__btn')[0].onclick = function (e) {
+    //     e.preventDefault()
+    //     iframe.style.display = 'none'
+    // }
+
+// function nodeToString(node) {
+//     var tmpNode = document.createElement('div')
+//     tmpNode.appendChild(node.cloneNode(true))
+//     var str = tmpNode.innerHTML
+//     tmpNode = node = null // prevent memory leaks in IE
+//     return str
+// }

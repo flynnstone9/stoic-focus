@@ -3,12 +3,13 @@
     "author": "Connor Flynn",
     "version": "1.0",
     "description": "Add personal popups on websites to remind yourself why you may want to be mindful of visiting that page.",
-    "permissions": ["declarativeContent", "storage", "activeTab", "tabs"],
+    "permissions": ["storage", "activeTab", "tabs", "<all_urls>"],
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
             "css": ["./styles/content.css"],
-            "js": ["contentScript.js"]
+            "js": ["contentScript.js"],
+            "all_frames": true
         }
     ],
     "background": {
@@ -30,6 +31,17 @@
         "48": "images/stoic64.png",
         "128": "images/stoic128.png"
     },
-    "web_accessible_resources": ["images/stoic128.png", "views/display.html"],
+    "web_accessible_resources": [
+        "images/stoic128.png",
+        "views/display.html",
+        "styles/content.css",
+        "services/timer.js"
+    ],
+    "applications": {
+        "gecko": {
+            "id": "connormflynn@gmail.com",
+            "strict_min_version": "53.0"
+        }
+    },
     "manifest_version": 2
 }
