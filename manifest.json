@@ -16,7 +16,7 @@
         "scripts": ["background.js"],
         "persistent": false
     },
-    "page_action": {
+    "browser_action": {
         "default_popup": "views/popup.html",
         "default_icon": {
             "16": "images/stoic16.png",
