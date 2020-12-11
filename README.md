@@ -4,7 +4,7 @@
 
 Stoic Focus is a digital wellbeing extension that allows humans to set popup messages to themselves on any web page.
 
-![Stoic Focus Demo](https://github.com/flynnstone9/stoic-focus/tree/main/images/demo.gif)
+![Stoic Focus Demo](https://github.com/flynnstone9/stoic-focus/blob/main/images/demo.gif?raw=true)
 
 ## Running Stoic Focus Locally
 
