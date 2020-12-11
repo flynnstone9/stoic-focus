@@ -1,7 +1,7 @@
 {
     "name": "Stoic Focus",
     "author": "Connor Flynn",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Add personal popups on websites to remind yourself why you may want to be mindful of visiting that page.",
     "permissions": ["storage", "activeTab", "tabs", "<all_urls>"],
     "content_scripts": [
