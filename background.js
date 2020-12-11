@@ -1,33 +1,16 @@
-//ext install fn
 chrome.runtime.onInstalled.addListener(function () {
-    //initial empty data set...
     chrome.storage.sync.set({ sites: [] }, () => {
         console.log('Sites has been set.')
     })
+})
 
-    // chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    //     //making ext work on all webpages
-    //     chrome.declarativeContent.onPageChanged.addRules([
-    //         {
-    //             conditions: [
-    //                 new chrome.declarativeContent.PageStateMatcher({
-    //                     // pageUrl: {hostEquals: 'developer.chrome.com'},
-    //                 }),
-    //             ],
-    //             actions: [new chrome.declarativeContent.ShowPageAction()],
-    //         },
-    //     ])
-    // })
-
-    //above code doesn't work for firefox
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        chrome.pageAction.show(tabId)
-        // if (changeInfo.status === 'complete') {
-        //     chrome.pageAction.show(tabId)
-        // } else {
-        //     chrome.pageAction.hide(tabId)
-        // }
-    })
+chrome.browserAction.onClicked.addListener(function (tab) {
+    if (changeInfo.status === 'complete') {
+        console.log('checking out listener')
+        chrome.pageAction.show(tab)
+    } else {
+        chrome.pageAction.hide(tab)
+    }
 })
 
 //checks if page matches exsisting page notes on tab load
