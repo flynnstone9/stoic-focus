@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(function () {
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     if (changeInfo.status === 'complete') {
-        console.log('checking out listener')
+        // console.log('checking out listener')
         chrome.pageAction.show(tab)
     } else {
         chrome.pageAction.hide(tab)
@@ -16,7 +16,15 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 //checks if page matches exsisting page notes on tab load
 //if so sends msg to browswer client side in contentScript.js
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (changeInfo.status == 'complete' && tab.active) {
+    let browser = getBrowser()
+    let checkUrl = null
+    if (browser === 'Firefox') {
+        checkUrl = changeInfo.url
+    } else {
+        checkUrl = true
+    }
+
+    if (checkUrl && changeInfo.status == 'complete' && tab.active) {
         //check if site matches notes sites
         let tablink = tab.url
 
@@ -25,6 +33,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
             for (let i = 0; i < sites.length; i++) {
                 let site = sites[i]
+
                 if (tablink === site.url) {
                     //add a visit to site
                     let updatedSite = {
@@ -45,3 +54,15 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         })
     }
 })
+
+function getBrowser() {
+    if (typeof chrome !== 'undefined') {
+        if (typeof browser !== 'undefined') {
+            return 'Firefox'
+        } else {
+            return 'Chrome'
+        }
+    } else {
+        return 'Edge'
+    }
+}

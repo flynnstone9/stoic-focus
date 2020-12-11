@@ -1,5 +1,4 @@
 //runs on client every page load
-console.log('stoic focus test content script')
 //listens for matching sites on chrome side // changes page for 10 seconds w message if match
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     // console.log(req, 'this is the req from chrome side')

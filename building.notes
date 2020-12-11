@@ -1,11 +1,10 @@
 TODO:
+add updated version to chrome once approved
 fix bug with styles
 
 NEXTTO:
 add options page... - see all - delete or add there / time of msg variable (light or dark mode)
 instead of closing popup on state change - just change the state lol
-timeout feature where you can timeoout a site for 15mins to not notifiy you...
-
 
 IFRAME CODE:
 // let iframe = document.createElement('iframe')

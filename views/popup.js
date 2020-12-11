@@ -2,9 +2,8 @@ let siteInfo = document.getElementById('siteInfo')
 let isCurrentSiteAlreadyAdded = false
 
 chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }, function (tab) {
-    console.log(tab, tab[0], tab.url)
     let tablink = tab[0].url
-    // console.log(tab, tablink, 'tablink')
+
     //set ui based on if msg set for site already
     chrome.storage.sync.get('sites', function (data) {
         let sites = data.sites
@@ -12,6 +11,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
 
         for (let i = 0; i < sites.length; i++) {
             let { url, msg, dateCreated, visits } = sites[i]
+            // console.log('looped', url, tablink)
             if (tablink === url) {
                 isCurrentSiteAlreadyAdded = true
                 let exsistingSiteText = document.createElement('div')
@@ -31,9 +31,8 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 deleteBtn.innerText = 'Deactivate'
                 deleteBtn.onclick = function (e) {
                     e.preventDefault()
-                    console.log('delete btn clicked')
-
-                    console.log(sites[i])
+                    // console.log('delete btn clicked')
+                    // console.log(sites[i])
 
                     let updatedSites = sites.filter((s) => s !== sites[i])
                     chrome.storage.sync.set(
@@ -41,7 +40,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                             sites: updatedSites,
                         },
                         function () {
-                            console.log('Value is set to ' + sites)
+                            // console.log('Value is set to ' + sites)
                         }
                     )
 
@@ -93,14 +92,14 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 }
 
                 sites.push(newSite)
-                console.log(sites, 'sites with new one')
+                // console.log(sites, 'added new site')
 
                 chrome.storage.sync.set(
                     {
                         sites: sites,
                     },
                     function () {
-                        console.log('Value is set to ' + sites)
+                        // console.log('Value is set to ' + sites)
                     }
                 )
 
@@ -113,7 +112,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             exsistingSiteText.appendChild(inputDiv)
             exsistingSiteText.appendChild(status)
             siteInfo.appendChild(exsistingSiteText)
-            console.log('site is not already active')
+            // console.log('site is not already active')
         }
     })
 })
