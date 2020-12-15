@@ -2,6 +2,18 @@
 //listens for matching sites on chrome side // changes page for 10 seconds w message if match
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     // console.log(req, 'this is the req from chrome side')
+
+    // let alreadyLoaded = document.getElementsByClassName('content_stoicFocus')[0]
+    // console.log(alreadyLoaded)
+    // if (req.status === 'done' && !alreadyLoaded) {
+    //     sendRes('load in cotent')
+    //     return
+    // }
+
+    // console.log(req, 'req')
+    // console.log(sender, 'sender')
+    // console.log(sendRes, 'sendRes')
+
     let body = document.querySelector('body')
 
     let msgDiv = document.createElement('div')

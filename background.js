@@ -24,7 +24,11 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         checkUrl = true
     }
 
-    if (checkUrl && changeInfo.status == 'complete' && tab.active) {
+    // console.log(tabId, 'tabid')
+    // console.log(tab, 'tab')
+    // console.log(changeInfo, 'changeInfo')
+
+    if (changeInfo.status == 'complete' && tab.active) {
         //check if site matches notes sites
         let tablink = tab.url
 
