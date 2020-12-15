@@ -1,18 +1,12 @@
 //runs on client every page load
 //listens for matching sites on chrome side // changes page for 10 seconds w message if match
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
-    // console.log(req, 'this is the req from chrome side')
+    let alreadyLoaded = document.getElementsByClassName('content_stoicFocus')[0]
+    if (alreadyLoaded) {
+        return
+    }
 
-    // let alreadyLoaded = document.getElementsByClassName('content_stoicFocus')[0]
-    // console.log(alreadyLoaded)
-    // if (req.status === 'done' && !alreadyLoaded) {
-    //     sendRes('load in cotent')
-    //     return
-    // }
-
-    // console.log(req, 'req')
-    // console.log(sender, 'sender')
-    // console.log(sendRes, 'sendRes')
+    let { updatedSite, browser } = req
 
     let body = document.querySelector('body')
 
@@ -43,23 +37,25 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     mainContentDiv.classList = 'content_stoicFocus__contentDiv'
     mainContentDiv.appendChild(imgDiv)
     mainContentDiv.innerHTML += `<div class="content__sf__txt">
-                                <div class="content__sf__txt__msg">${req.msg}</div>
-                                <div class="content__sf__txt__site">${req.url}</div>
+                                <div class="content__sf__txt__msg">${updatedSite.msg}</div>
+                                <div class="content__sf__txt__site">${updatedSite.url}</div>
                             </div>`
 
-    mainContentDiv.innerHTML += `<div class="content__sf__counterDiv">
+    if (browser !== 'Firefox') {
+        mainContentDiv.innerHTML += `<div class="content__sf__counterDiv">
                                     <div class="content__sf__counterDiv__visits">
-                                        <div class="content__sf__counterDiv__visits_num">${req.visits}</div>
+                                        <div class="content__sf__counterDiv__visits_num">${updatedSite.visits}</div>
                                         <div class="content__sf__counterDiv__visits_text"># of visits since</div>
                                     </div>
                                     <div class="content__sf__counterDiv__date">
                                         <div class="content__sf__counterDiv__date__text">
                                         <span class="content__sf__counterDiv__date__date">${formatDate(
-                                            req.dateCreated
+                                            updatedSite.dateCreated
                                         )}</span>
                                         </div>
                                     </div>
                                 </div>`
+    }
 
     msgInnerDiv.appendChild(mainContentDiv)
 

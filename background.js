@@ -51,7 +51,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                         // console.log(updatedSites);
                     })
 
-                    chrome.tabs.sendMessage(tabId, updatedSite)
+                    chrome.tabs.sendMessage(tabId, { updatedSite, browser })
                     return
                 }
             }
