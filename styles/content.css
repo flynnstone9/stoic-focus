@@ -1,14 +1,17 @@
+.content_stoicFocus * {
+    all: unset;
+}
+
 .content_stoicFocus {
     background: #222;
     display: flex;
     position: fixed;
     margin: 0 auto;
     box-sizing: border-box;
-    /* top: 0; */
     left: 0;
     width: 100%;
     max-width: 100%;
-    font-size: 1rem;
+    font-size: 16px;
     font-family: system-ui, sans-serif;
     border: 3px solid #f86fa6;
     color: #777;
@@ -22,7 +25,6 @@
 }
 
 .content_stoicFocus__msgInner {
-    /* padding:100px; */
     width: 100%;
 }
 
@@ -41,13 +43,13 @@
 }
 
 .content__sf__txt__msg {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: #f86fa6;
 }
 
 .content__sf__txt__site {
     margin: 5px 0px;
-    font-size: 0.8rem;
+    font-size: 0.8em;
 }
 
 .content__sf__counterDiv {
@@ -65,12 +67,12 @@
 }
 
 .content__sf__counterDiv__date__text {
-    font-size: 0.7rem;
+    font-size: 1em;
     opacity: 0.8;
 }
 
 .content__sf__counterDiv__date__date {
-    font-size: 0.7rem;
+    font-size: 0.7em;
     border-bottom: 1px solid #777;
 }
 
@@ -79,8 +81,6 @@
     flex-direction: column;
     margin: 20px 0 0;
     align-items: flex-end;
-    /* text-align: flex-start ; */
-    /* padding: 20px; */
 }
 
 .content__sf__counterDiv__visits_num {
@@ -89,14 +89,13 @@
 }
 
 .content__sf__counterDiv__visits_text {
-    font-size: 0.9rem;
-    /* border-bottom: 1px solid white; */
+    font-size: 0.9em;
     margin-top: 10px;
     text-align: right;
 }
 
 .content__sf__timer {
-    font-size: 0.8rem;
+    font-size: 0.8em;
     padding: 0px 10px;
     letter-spacing: 1px;
 }
@@ -104,7 +103,7 @@
 .content__sf__timer__time {
     color: #888;
     opacity: 0.8;
-    font-size: 0.8;
+    font-size: 0.8em;
     text-transform: uppercase;
     border-bottom: 1px solid #777;
 }
@@ -125,13 +124,12 @@
 
 .close__btn {
     display: inline-block;
-    padding: 0.3rem 1.65rem;
+    padding: 0.3em 1.65em 0.3em calc(1.65em - 3px);
     border: 2px;
     margin: 0;
     text-decoration: none;
     background: #f86fa6;
     color: #111;
-    font-size: 0.8rem;
     cursor: pointer;
     text-align: center;
     transition: background 250ms ease-in-out, transform 150ms ease;
@@ -140,7 +138,7 @@
     letter-spacing: 1px;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.6rem;
+    font-size: 0.6em;
 }
 
 .content_stoicfocus_img {

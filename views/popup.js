@@ -16,40 +16,67 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 isCurrentSiteAlreadyAdded = true
                 let exsistingSiteText = document.createElement('div')
                 exsistingSiteText.classList = 'siteInfo__container'
-                exsistingSiteText.innerHTML = `<div class="url">
-                    <div class="msg"><span class="url__status url__status--active">current msg</span>: ${msg}</div>  
-                    <div class="url__status "><span class="url__status--active">active:</span></div>
-                    <span class="url__link">${url}</span>
-                    <div class="url__status "><span class="url__status--active">Date Created</span>:</div>
-                    <span class="url__link">${formatDate(dateCreated)}</span>
-                    <div class="url__status "><span class="url__status--active"># of Visits</span>:</div>
-                    <span class="url__link">${visits}</span>
-                </div>`
+
+                let urlDiv = document.createElement('div')
+                urlDiv.classList = 'url'
+
+                let msgDiv = document.createElement('div')
+                msgDiv.classList = 'msg'
+                let msgDivSpan = document.createElement('span')
+                msgDivSpan.classList = 'url__status url__status--active'
+                msgDivSpan.innerText = `current msg`
+                msgDiv.innerText += `: ${msg}`
+                msgDiv.insertBefore(msgDivSpan, msgDiv.firstChild)
+
+                let buildStatusDiv = (text) => {
+                    let statusDiv = document.createElement('div')
+                    statusDiv.classList = 'url__status'
+                    let statusDivSpan = document.createElement('span')
+                    statusDivSpan.classList = 'url__status--active'
+                    statusDivSpan.textContent = `${text}`
+                    statusDiv.appendChild(statusDivSpan)
+                    return statusDiv
+                }
+
+                let activeDiv = buildStatusDiv('active:')
+
+                let buildSpan = (text) => {
+                    let urlLink = document.createElement('span')
+                    urlLink.classList = 'url__link'
+                    urlLink.textContent = `${text}`
+                    return urlLink
+                }
+
+                let urlSpanLink = buildSpan(url)
+                let dateDiv = buildStatusDiv('Date Created:')
+                let urlDateLink = buildSpan(formatDate(dateCreated))
+                let visitsDiv = buildStatusDiv('# of Visits')
+                let urlVisitsLink = buildSpan(visits)
+
+                urlDiv.appendChild(msgDiv)
+                urlDiv.appendChild(activeDiv)
+                urlDiv.appendChild(urlSpanLink)
+                urlDiv.appendChild(dateDiv)
+                urlDiv.appendChild(urlDateLink)
+                urlDiv.appendChild(visitsDiv)
+                urlDiv.appendChild(urlVisitsLink)
+
+                exsistingSiteText.appendChild(urlDiv)
+
                 siteInfo.appendChild(exsistingSiteText)
 
                 let deleteBtn = document.createElement('button')
                 deleteBtn.innerText = 'Deactivate'
                 deleteBtn.onclick = function (e) {
                     e.preventDefault()
-                    // console.log('delete btn clicked')
-                    // console.log(sites[i])
 
                     let updatedSites = sites.filter((s) => s !== sites[i])
-                    chrome.storage.sync.set(
-                        {
-                            sites: updatedSites,
-                        },
-                        function () {
-                            // console.log('Value is set to ' + sites)
-                        }
-                    )
+                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
 
                     window.close()
                 }
 
-                // siteInfo.appendChild(editBtn)
                 siteInfo.appendChild(deleteBtn)
-
                 return
             }
         }
@@ -60,12 +87,23 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
 
             let status = document.createElement('div')
             status.classList = 'url'
-            status.innerHTML = `<div class="url__status "><span class="url__status url__status--notactive">not active</span></div><span class="url__link">${tablink}</span>`
+
+            let statusDiv = document.createElement('div')
+            statusDiv.classList = 'url__status'
+            let statusDivSpan = document.createElement('span')
+            statusDivSpan.classList = 'url__status url__status--notactive'
+            statusDivSpan.textContent = 'not active'
+            statusDiv.appendChild(statusDivSpan)
+
+            let urlLink = document.createElement('span')
+            urlLink.classList = 'url__link'
+            urlLink.textContent = `${tablink}`
+
+            status.appendChild(statusDiv)
+            status.appendChild(urlLink)
 
             let inputDiv = document.createElement('form')
             inputDiv.classList = 'input__container'
-
-            // inputDiv.innerHTML = `<div class="input__title">Add Msg For Site</div>`
 
             let input = document.createElement('input')
             input.setAttribute('type', 'text')
@@ -80,8 +118,6 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             submitBtn.innerText = 'Activate'
             function submitMsg(e) {
                 e.preventDefault()
-                // console.log('hey', e.target, input.value)
-
                 const currentTime = new Date().toJSON()
 
                 let newSite = {
@@ -92,16 +128,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 }
 
                 sites.push(newSite)
-                // console.log(sites, 'added new site')
-
-                chrome.storage.sync.set(
-                    {
-                        sites: sites,
-                    },
-                    function () {
-                        // console.log('Value is set to ' + sites)
-                    }
-                )
+                chrome.storage.sync.set({ sites: sites }, function () {})
 
                 window.close()
             }
@@ -112,7 +139,6 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             exsistingSiteText.appendChild(inputDiv)
             exsistingSiteText.appendChild(status)
             siteInfo.appendChild(exsistingSiteText)
-            // console.log('site is not already active')
         }
     })
 })

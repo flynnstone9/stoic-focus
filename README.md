@@ -2,7 +2,9 @@
 
 ## What is it?
 
-Stoic Focus is a digital wellbeing extension that allows humans to set popup messages to themselves on any web page.
+Stoic Focus is a digital wellbeing extension that allows humans to set popup messages to themselves on any web page.<br>
+[Download Chrome Extension](https://chrome.google.com/webstore/detail/stoic-focus/pbabebgndngiinolomgjelendckbjfko)<br>
+[Download Firefox Extension](https://addons.mozilla.org/en-US/firefox/addon/stoic-focus/)
 
 ![Stoic Focus Demo](https://github.com/flynnstone9/stoic-focus/blob/main/images/demo.gif?raw=true)
 

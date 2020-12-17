@@ -6,7 +6,6 @@ chrome.runtime.onInstalled.addListener(function () {
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     if (changeInfo.status === 'complete') {
-        // console.log('checking out listener')
         chrome.pageAction.show(tab)
     } else {
         chrome.pageAction.hide(tab)
@@ -23,10 +22,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     } else {
         checkUrl = true
     }
-
-    // console.log(tabId, 'tabid')
-    // console.log(tab, 'tab')
-    // console.log(changeInfo, 'changeInfo')
 
     if (changeInfo.status == 'complete' && tab.active) {
         //check if site matches notes sites
@@ -47,9 +42,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
                     let updatedSites = sites.map((s) => (s.url === site.url ? updatedSite : s))
 
-                    chrome.storage.sync.set({ sites: updatedSites }, function () {
-                        // console.log(updatedSites);
-                    })
+                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
 
                     chrome.tabs.sendMessage(tabId, { updatedSite, browser })
                     return

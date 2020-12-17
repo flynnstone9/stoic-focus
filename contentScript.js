@@ -36,25 +36,47 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
 
     mainContentDiv.classList = 'content_stoicFocus__contentDiv'
     mainContentDiv.appendChild(imgDiv)
-    mainContentDiv.innerHTML += `<div class="content__sf__txt">
-                                <div class="content__sf__txt__msg">${updatedSite.msg}</div>
-                                <div class="content__sf__txt__site">${updatedSite.url}</div>
-                            </div>`
+
+    let mainTextDiv = document.createElement('div')
+    mainTextDiv.classList = 'content__sf__txt'
+    let mainTextDivTxtMsg = document.createElement('div')
+    mainTextDivTxtMsg.classList = 'content__sf__txt__msg'
+    mainTextDivTxtMsg.textContent = `${updatedSite.msg}`
+    let mainTextDivTxtSite = document.createElement('div')
+    mainTextDivTxtSite.classList = 'content__sf__txt__site'
+    mainTextDivTxtSite.textContent = `${updatedSite.url}`
+    mainTextDiv.appendChild(mainTextDivTxtMsg)
+    mainTextDiv.appendChild(mainTextDivTxtSite)
+    mainContentDiv.appendChild(mainTextDiv)
 
     if (browser !== 'Firefox') {
-        mainContentDiv.innerHTML += `<div class="content__sf__counterDiv">
-                                    <div class="content__sf__counterDiv__visits">
-                                        <div class="content__sf__counterDiv__visits_num">${updatedSite.visits}</div>
-                                        <div class="content__sf__counterDiv__visits_text"># of visits since</div>
-                                    </div>
-                                    <div class="content__sf__counterDiv__date">
-                                        <div class="content__sf__counterDiv__date__text">
-                                        <span class="content__sf__counterDiv__date__date">${formatDate(
-                                            updatedSite.dateCreated
-                                        )}</span>
-                                        </div>
-                                    </div>
-                                </div>`
+        let counterDiv = document.createElement('div')
+        counterDiv.classList = 'content__sf__counterDiv'
+
+        let counterDivVisits = document.createElement('div')
+        counterDivVisits.classList = 'content__sf__counterDiv__visits'
+        let counterDivVisitsNum = document.createElement('div')
+        counterDivVisitsNum.classList = 'content__sf__counterDiv__visits_num'
+        counterDivVisitsNum.textContent = `${updatedSite.visits}`
+        let counterDivVisitsText = document.createElement('div')
+        counterDivVisitsText.classList = 'content__sf__counterDiv__visits_text'
+        counterDivVisitsText.textContent = `# of visits since`
+        counterDivVisits.appendChild(counterDivVisitsNum)
+        counterDivVisits.appendChild(counterDivVisitsText)
+
+        let counterDivDate = document.createElement('div')
+        counterDivDate.classList = 'content__sf__counterDiv__date'
+        let counterDivDateText = document.createElement('div')
+        counterDivDateText.classList = 'content__sf__counterDiv__date__text'
+        let counterDivDateDate = document.createElement('span')
+        counterDivDateDate.classList = 'content__sf__counterDiv__date__date'
+        counterDivDateDate.textContent = `${formatDate(updatedSite.dateCreated)}`
+        counterDivDateText.appendChild(counterDivDateDate)
+        counterDivDate.appendChild(counterDivDateText)
+
+        counterDiv.appendChild(counterDivVisits)
+        counterDiv.appendChild(counterDivDate)
+        mainContentDiv.appendChild(counterDiv)
     }
 
     msgInnerDiv.appendChild(mainContentDiv)
@@ -69,9 +91,14 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
         if (msgTime <= 0) {
             clearInterval(timer)
         }
-        document.getElementsByClassName(
-            'content__sf__timer'
-        )[0].innerHTML = `Disappearing in <span class="content__sf__timer__time">${msgTime} seconds</span>`
+
+        let timerElement = document.getElementsByClassName('content__sf__timer')[0]
+        timerElement.textContent = 'Disappearing in '
+        let timerSpan = document.createElement('span')
+        timerSpan.classList = 'content__sf__timer__time'
+        timerSpan.textContent = `${msgTime} seconds`
+        timerElement.appendChild(timerSpan)
+
         msgTime--
     }
 
@@ -96,7 +123,6 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
 
     setTimeout(() => {
         msgDiv.classList.add('content_stoicFocus__hidden')
-        // msgDiv.style.display = 'none'
         setTimeout(() => {
             msgDiv.style.display = 'none'
         }, 2000)
