@@ -19,7 +19,7 @@ git clone https://github.com/flynnstone9/stoic-focus.git
 ### Load Extension in Google Chrome
 
 ```
-Visit chrome://extensions
+Visit [chrome://extensions](chrome://extensions)
 Activate Developer mode
 Load unpacked extension
 Navigate to local Stoic Focus Folder and open
