@@ -9,6 +9,15 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
         let sites = data.sites
         let isCurrentSiteAlreadyAdded
 
+        let options = document.querySelector('div.options')
+        options.textContent = "Open Extension's Options"
+
+        options.addEventListener('click', () => {
+            let browser = getBrowser()
+            let url = browser !== 'Firefox' ? 'views/options.html' : 'options.html'
+            chrome.tabs.create({ url: url })
+        })
+
         for (let i = 0; i < sites.length; i++) {
             let { url, msg, dateCreated, visits } = sites[i]
             // console.log('looped', url, tablink)
@@ -140,15 +149,6 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             exsistingSiteText.appendChild(status)
             siteInfo.appendChild(exsistingSiteText)
         }
-
-        let options = document.querySelector('div.options')
-        options.textContent = "Open Extension's Options"
-
-        options.addEventListener('click', () => {
-            let browser = getBrowser()
-            let url = browser !== 'Firefox' ? 'views/options.html' : 'options.html'
-            chrome.tabs.create({ url: url })
-        })
     })
 })
 
