@@ -1,9 +1,6 @@
 TODO:
-options page... (time of popup, show all messages, delete all messages there, light or dark mode)
-chrome img store issue (email)
-
-NEXTTO:
-instead of closing popup on state change - just change the state lol
+options page... (delete all your popups there 'x' btn on each / a clear all btn)
+chrome storage resetting bug issue
 
 NOTES:
 //zip without hidden macos files

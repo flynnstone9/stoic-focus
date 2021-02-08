@@ -140,6 +140,15 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             exsistingSiteText.appendChild(status)
             siteInfo.appendChild(exsistingSiteText)
         }
+
+        let options = document.querySelector('div.options')
+        options.textContent = "Open Extension's Options"
+
+        options.addEventListener('click', () => {
+            let browser = getBrowser()
+            let url = browser !== 'Firefox' ? 'views/options.html' : 'options.html'
+            chrome.tabs.create({ url: url })
+        })
     })
 })
 
@@ -153,4 +162,16 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day
 
     return [month, day, year].join('/')
+}
+
+function getBrowser() {
+    if (typeof chrome !== 'undefined') {
+        if (typeof browser !== 'undefined') {
+            return 'Firefox'
+        } else {
+            return 'Chrome'
+        }
+    } else {
+        return 'Edge'
+    }
 }

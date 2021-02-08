@@ -1,7 +1,16 @@
 chrome.runtime.onInstalled.addListener(function () {
-    chrome.storage.sync.set({ sites: [] }, () => {
-        console.log('Sites has been set.')
-    })
+    chrome.storage.sync.set(
+        {
+            sites: [],
+            options: {
+                fullscreen: false,
+                timer: 10,
+            },
+        },
+        () => {
+            console.log('Sites has been set.')
+        }
+    )
 })
 
 chrome.browserAction.onClicked.addListener(function (tab) {
@@ -27,9 +36,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         //check if site matches notes sites
         let tablink = tab.url
 
-        chrome.storage.sync.get('sites', function (data) {
-            let sites = data.sites
-
+        chrome.storage.sync.get(null, function ({ sites, options }) {
             for (let i = 0; i < sites.length; i++) {
                 let site = sites[i]
 
@@ -44,7 +51,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
                     chrome.storage.sync.set({ sites: updatedSites }, function () {})
 
-                    chrome.tabs.sendMessage(tabId, { updatedSite, browser })
+                    chrome.tabs.sendMessage(tabId, { updatedSite, browser, options })
                     return
                 }
             }

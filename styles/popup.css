@@ -154,3 +154,9 @@ button:focus {
 button:active {
     transform: scale(0.99);
 }
+
+.options {
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+}

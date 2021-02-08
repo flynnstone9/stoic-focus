@@ -19,6 +19,10 @@
     opacity: 0.95;
 }
 
+.content_stoicFocus__Fullscreen {
+    height: 100vh;
+}
+
 .content_stoicFocus__hidden {
     opacity: 0;
     transition: opacity 2s ease-in;
@@ -122,6 +126,10 @@
     display: flex;
 }
 
+.footer__div__Fullscreen {
+    padding: 50px;
+}
+
 .close__btn {
     display: inline-block;
     padding: 0.3em 1.65em 0.3em calc(1.65em - 3px);
@@ -144,4 +152,14 @@
 .content_stoicfocus_img {
     width: 128px !important;
     height: 128px !important;
+}
+
+.content__sf__stoicquote__div {
+    margin-top: 15px;
+}
+
+.content__sf__stoicquote__quote {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: darkgrey;
 }
