@@ -5,6 +5,7 @@ chrome.runtime.onInstalled.addListener(function () {
             options: {
                 fullscreen: false,
                 timer: 10,
+                closePopupBeforeTimer: true,
             },
         },
         () => {

@@ -111,24 +111,27 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
         msgTime--
     }
 
-    let closeBtn = document.createElement('button')
-    closeBtn.innerHTML = '[X]'
-    closeBtn.classList = 'close__btn'
-
-    closeBtn.onclick = function (e) {
-        e.preventDefault()
-        msgDiv.style.display = 'none'
-    }
-
     let footerDiv = document.createElement('div')
     footerDiv.classList = 'footer__div'
+
+    if (options.closePopupBeforeTimer) {
+        let closeBtn = document.createElement('button')
+        closeBtn.innerHTML = '[X]'
+        closeBtn.classList = 'close__btn'
+
+        closeBtn.onclick = function (e) {
+            e.preventDefault()
+            msgDiv.style.display = 'none'
+        }
+
+        footerDiv.appendChild(closeBtn)
+    }
 
     if (options.fullscreen) {
         msgDiv.classList += ' content_stoicFocus__Fullscreen'
         footerDiv.classList += ' footer__div__Fullscreen'
     }
 
-    footerDiv.appendChild(closeBtn)
     footerDiv.appendChild(timerDiv)
     msgInnerDiv.appendChild(footerDiv)
 

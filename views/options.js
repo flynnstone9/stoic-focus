@@ -3,10 +3,12 @@ import formatDate from '../services/formatDate.js'
 function save_options() {
     let timer = document.getElementById('timer').value
     let fullscreen = document.getElementById('fullscreen').checked
+    let closePopupBeforeTimer = document.getElementById('closePopupBeforeTimer').checked
 
     let usersOptions = {
         fullscreen,
         timer: timer,
+        closePopupBeforeTimer,
     }
 
     chrome.storage.sync.set(
@@ -29,10 +31,11 @@ function save_options() {
 // stored in chrome.storage.
 function restore_options() {
     chrome.storage.sync.get(null, function ({ options, sites }) {
-        console.log(options, 'options', sites, 'sites')
+        // console.log(options, 'options', sites, 'sites')
         document.getElementById('timer').value = options.timer
         document.getElementById('timer').placeholder = 'Add Display Time'
         document.getElementById('fullscreen').checked = options.fullscreen
+        document.getElementById('closePopupBeforeTimer').checked = options.closePopupBeforeTimer
 
         let siteListContainer = document.getElementById('options__popups__siteList')
         let siteListTable = document.getElementById('options__popups__siteList__table')
