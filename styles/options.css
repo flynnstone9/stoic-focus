@@ -45,7 +45,7 @@
     align-items: center;
 }
 
-#save {
+.options__btn {
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -53,4 +53,10 @@
 #status {
     text-transform: capitalize;
     color: rgb(36, 240, 213);
+    margin-top: 10px;
+    opacity: 1;
+}
+
+#status.hidden {
+    opacity: 0;
 }
