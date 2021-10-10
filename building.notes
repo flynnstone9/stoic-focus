@@ -1,5 +1,7 @@
 TODO:
 port to safari
+chrome manifest v3? does this work for firefox? safari?
+https://developer.chrome.com/docs/extensions/mv3/intro/mv3-migration/
 
 NOTES:
 //zip without hidden macos files
