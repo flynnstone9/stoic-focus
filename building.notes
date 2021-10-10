@@ -9,3 +9,8 @@ zip -r dir.zip . -x ".*" -x "__MACOSX"
 
 //delete all ds stores folder
 find . -name ".DS_Store" -delete
+
+//places to update extensions
+//(use the respective browser to update each)
+https://chrome.google.com/webstore/devconsole
+https://addons.mozilla.org/en-US/developers/
