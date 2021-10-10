@@ -12,6 +12,11 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
         let options = document.querySelector('div.options')
         options.textContent = "Open Extension's Options"
 
+        let manifestData = chrome.runtime.getManifest()
+        console.log(manifestData.version, typeof manifestData.version)
+        let versionSpan = document.querySelector('span.version__number')
+        versionSpan.innerText = `${manifestData.version}`
+
         options.addEventListener('click', () => {
             let browser = getBrowser()
             let url = browser !== 'Firefox' ? 'views/options.html' : 'options.html'

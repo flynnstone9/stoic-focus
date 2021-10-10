@@ -17,16 +17,46 @@ function save_options() {
         },
         function () {
             // Update status to let user know options were saved.
-            var status = document.getElementById('status')
+            const status = document.getElementById('status')
             status.textContent = 'Options saved.'
+            status.classList = ''
             setTimeout(function () {
-                status.textContent = ''
+                status.classList = 'hidden'
             }, 1550)
         }
     )
 }
 
-// Restores select box and checkbox state using the preferences
+function reset_messages() {
+    let confirmDestroy = window.confirm('Are you sure you want to delete all msgs and websites in Stotic Focus?')
+
+    if (confirmDestroy) {
+        const deleteMsgBtn = document.getElementById('reset')
+        deleteMsgBtn.remove()
+
+        chrome.storage.sync.set(
+            {
+                sites: [],
+            },
+            function () {
+                // Update status //deletes all messages //updates view
+                document.querySelector('#options__popups__siteList > span').textContent = 'No Site Messages Set Yet'
+                const status = document.getElementById('status')
+
+                const msgDiv = document.getElementById('options__popups__siteList__table')
+                msgDiv.remove()
+
+                status.textContent = 'Removed all messages.'
+                status.classList = ''
+                setTimeout(function () {
+                    status.classList = 'hidden'
+                }, 1550)
+            }
+        )
+    }
+}
+
+// Restores select box and checkbox state using the preferences in storage
 // Displays Current Popups
 // stored in chrome.storage.
 function restore_options() {
@@ -42,9 +72,20 @@ function restore_options() {
         let headerText = document.createElement('span')
         headerText.classList = 'options__popups__header'
         if (sites[0]) {
+            //creates delete all messages btn
+            const saveBtn = document.getElementById('save')
+            let deleteMsgBtn = document.createElement('button')
+            deleteMsgBtn.classList = 'options__btn'
+            deleteMsgBtn.setAttribute('id', 'reset')
+            saveBtn.after(deleteMsgBtn)
+            deleteMsgBtn.innerHTML = 'Delete All Messages'
+            deleteMsgBtn.addEventListener('click', reset_messages)
+
+            //updates title of section
             headerText.textContent = 'Your Current Popups'
             siteListContainer.prepend(headerText)
 
+            //populates the list of current messages
             sites.forEach((site) => {
                 let { dateCreated, msg, url, visits } = site
                 let siteDiv = document.createElement('div')
@@ -70,7 +111,8 @@ function restore_options() {
                 siteListTable.appendChild(siteDiv)
             })
         } else {
-            headerText.textContent = 'No Sites Set Yet'
+            //resets title
+            headerText.textContent = 'No Sites Messages Set Yet'
             siteListContainer.appendChild(headerText)
         }
     })

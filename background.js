@@ -1,17 +1,19 @@
-chrome.runtime.onInstalled.addListener(function () {
-    chrome.storage.sync.set(
-        {
-            sites: [],
-            options: {
-                fullscreen: false,
-                timer: 10,
-                closePopupBeforeTimer: true,
+chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason == 'install') {
+        chrome.storage.sync.set(
+            {
+                sites: [],
+                options: {
+                    fullscreen: false,
+                    timer: 10,
+                    closePopupBeforeTimer: true,
+                },
             },
-        },
-        () => {
-            console.log('Sites has been set.')
-        }
-    )
+            () => {
+                console.log('Sites has been set.')
+            }
+        )
+    }
 })
 
 chrome.browserAction.onClicked.addListener(function (tab) {
