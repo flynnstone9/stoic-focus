@@ -14,5 +14,6 @@ find . -name ".DS_Store" -delete
 
 //places to update extensions
 //(use the respective browser to update each)
+**REMOVE NOTES AND GIF BEFORE ZIPPING**
 https://chrome.google.com/webstore/devconsole
 https://addons.mozilla.org/en-US/developers/
