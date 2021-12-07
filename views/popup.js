@@ -54,18 +54,18 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
 
                 let activeDiv = buildStatusDiv('active:')
 
-                let buildSpan = (text) => {
-                    let urlLink = document.createElement('span')
+                let buildDiv = (text) => {
+                    let urlLink = document.createElement('div')
                     urlLink.classList = 'url__link'
                     urlLink.textContent = `${text}`
                     return urlLink
                 }
 
-                let urlSpanLink = buildSpan(url)
+                let urlSpanLink = buildDiv(url)
                 let dateDiv = buildStatusDiv('Date Created:')
-                let urlDateLink = buildSpan(formatDate(dateCreated))
+                let urlDateLink = buildDiv(formatDate(dateCreated))
                 let visitsDiv = buildStatusDiv('# of Visits')
-                let urlVisitsLink = buildSpan(visits)
+                let urlVisitsLink = buildDiv(visits)
 
                 urlDiv.appendChild(msgDiv)
                 urlDiv.appendChild(activeDiv)
