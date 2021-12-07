@@ -60,6 +60,21 @@ function reset_messages() {
     }
 }
 
+function delete_message(siteURL, siteDiv) {
+
+    const confirmDestroy = window.confirm('Are you sure you want to delete this msg?')
+
+    if (confirmDestroy) {
+        chrome.storage.sync.get('sites', function (data) {
+            let sites = data.sites
+            let updatedSites = sites.filter((s) => s.url !== siteURL)
+            chrome.storage.sync.set({ sites: updatedSites }, function () {
+                siteDiv.remove()
+            })
+        })
+    }
+}
+
 // Restores select box and checkbox state using the preferences in storage
 // Displays Current Popups
 // stored in chrome.storage.
@@ -112,10 +127,15 @@ function restore_options() {
                 let dateCreatedDiv = document.createElement('div')
                 dateCreatedDiv.textContent = formatDate(dateCreated)
 
+                let deleteBtn = document.createElement('button')
+                deleteBtn.textContent = 'Delete'
+                deleteBtn.addEventListener('click', () => delete_message(url, siteDiv))
+
                 siteDiv.appendChild(urlDiv)
                 siteDiv.appendChild(msgDiv)
                 siteDiv.appendChild(visitsDiv)
                 siteDiv.appendChild(dateCreatedDiv)
+                siteDiv.appendChild(deleteBtn)
                 siteListTable.appendChild(siteDiv)
             })
         } else {

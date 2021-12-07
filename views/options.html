@@ -13,30 +13,34 @@
 <body>
     <div class="options__body">
         <div class="options__container">
-            <div>
-                <label class="options__label" for="timer">Popup Display Time (seconds) </label>
-                <input type="number" id="timer" name="timer" />
+            <div class="options_row bottom__margin--small">
+                <div class="bottom__margin--small">
+                    <label class="options__label" for="timer">Popup Display Time (seconds) </label>
+                    <input type="number" id="timer" name="timer" />
+                </div>
+                <label>
+                    <span class="options__label">Full Page Popup</span>
+                    <input type="checkbox" id="fullscreen" />
+                </label>
+                <label>
+                    <span class="options__label">Close Popup Btn</span>
+                    <input type="checkbox" id="closePopupBeforeTimer" />
+                </label>
+                <label>
+                    <span class="options__label">Opaque Popup</span>
+                    <input type="checkbox" id="opaque" />
+                </label>
+                <label>
+                    <span class="options__label">Stoic Quotes</span>
+                    <input type="checkbox" id="stoicQuotes" />
+                </label>
             </div>
-            <label>
-                <span class="options__label">Full Page Popup</span>
-                <input type="checkbox" id="fullscreen" />
-            </label>
-            <label>
-                <span class="options__label">Close Btn on Popup To Close Before Timer Runs Out</span>
-                <input type="checkbox" id="closePopupBeforeTimer" />
-            </label>
-            <label>
-                <span class="options__label">Opaque Popup</span>
-                <input type="checkbox" id="opaque" />
-            </label>
-            <label>
-                <span class="options__label">Stoic Quotes</span>
-                <input type="checkbox" id="stoicQuotes" />
-            </label>
-            <div class="options__btn__container">
-                <button class="options__btn" id="save">Save Settings</button>
+            <div class="options_row">
+                <div class="options__btn__container">
+                    <button class="options__btn" id="save">Save Settings</button>
+                </div>
+                <div id="status" class="hidden">No Status Update</div>
             </div>
-            <div id="status" class="hidden">No Status Update</div>
         </div>
 
         <div id="options__popups__siteList">

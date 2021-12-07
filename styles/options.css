@@ -1,3 +1,7 @@
+body {
+    min-height: 94vh;
+}
+
 .options__body {
     display: flex;
     flex-direction: column;
@@ -11,8 +15,21 @@
     margin-bottom: 40px;
 }
 
+label {
+    margin-right: 30px;
+}
+
 .options__label {
     padding-right: 10px;
+}
+
+.options__row {
+    display: flex;
+    flex-direction: row;
+}
+
+.bottom__margin--small {
+    margin-bottom: 9px;
 }
 
 #options__popups__siteList {
@@ -26,7 +43,7 @@
 
 .options__popups_sitelist__li {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 3fr 3fr 3fr 1fr;
     margin-top: 15px;
 }
 
