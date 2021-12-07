@@ -1,14 +1,18 @@
 import formatDate from '../services/formatDate.js'
 // Saves options to chrome.storage
 function save_options() {
-    let timer = document.getElementById('timer').value
-    let fullscreen = document.getElementById('fullscreen').checked
-    let closePopupBeforeTimer = document.getElementById('closePopupBeforeTimer').checked
+    const timer = document.getElementById('timer').value
+    const fullscreen = document.getElementById('fullscreen').checked
+    const closePopupBeforeTimer = document.getElementById('closePopupBeforeTimer').checked
+    const opaque = document.getElementById('opaque').checked
+    const stoicQuotes = document.getElementById('stoicQuotes').checked
 
-    let usersOptions = {
+    const usersOptions = {
         fullscreen,
         timer: timer,
         closePopupBeforeTimer,
+        opaque,
+        stoicQuotes
     }
 
     chrome.storage.sync.set(
@@ -66,6 +70,8 @@ function restore_options() {
         document.getElementById('timer').placeholder = 'Add Display Time'
         document.getElementById('fullscreen').checked = options.fullscreen
         document.getElementById('closePopupBeforeTimer').checked = options.closePopupBeforeTimer
+        document.getElementById('opaque').checked = options.opaque
+        document.getElementById('stoicQuotes').checked = options.stoicQuotes
 
         let siteListContainer = document.getElementById('options__popups__siteList')
         let siteListTable = document.getElementById('options__popups__siteList__table')
@@ -91,8 +97,10 @@ function restore_options() {
                 let siteDiv = document.createElement('div')
                 siteDiv.classList = 'options__popups_sitelist__li'
 
+
                 let urlDiv = document.createElement('div')
                 urlDiv.textContent = url
+                urlDiv.classList = 'options__popups_sitelist__li__url'
 
                 let msgDiv = document.createElement('div')
                 msgDiv.textContent = msg

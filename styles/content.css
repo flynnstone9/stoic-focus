@@ -19,6 +19,10 @@
     opacity: 0.95;
 }
 
+.content_stoicFocus--opaque {
+    opacity: 1;
+}
+
 .content_stoicFocus__Fullscreen {
     height: 100vh;
 }

@@ -30,6 +30,12 @@
     margin-top: 15px;
 }
 
+.options__popups_sitelist__li__url {
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
 .options__popups_sitelist__li__msg {
     margin-left: 10px;
 }

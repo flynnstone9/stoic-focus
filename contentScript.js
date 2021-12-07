@@ -13,6 +13,10 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     let msgDiv = document.createElement('div')
     msgDiv.classList = 'content_stoicFocus'
 
+    if (options.opaque) {
+        msgDiv.classList.add('content_stoicFocus--opaque')
+    }
+
     let imgDiv = document.createElement('div')
     imgDiv.style.display = 'flex'
 
@@ -48,13 +52,15 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     mainTextDiv.appendChild(mainTextDivTxtMsg)
     mainTextDiv.appendChild(mainTextDivTxtSite)
 
-    let stoicQuoteDiv = document.createElement('div')
-    stoicQuoteDiv.classList = 'content__sf__stoicquote__div'
-    let stoicQuote = document.createElement('p')
-    stoicQuote.classList = 'content__sf__stoicquote__quote'
-    stoicQuote.textContent = `"${getRandomQuote()}"`
-    stoicQuoteDiv.appendChild(stoicQuote)
-    mainTextDiv.appendChild(stoicQuoteDiv)
+    if (options.stoicQuote) {
+        let stoicQuoteDiv = document.createElement('div')
+        stoicQuoteDiv.classList = 'content__sf__stoicquote__div'
+        let stoicQuote = document.createElement('p')
+        stoicQuote.classList = 'content__sf__stoicquote__quote'
+        stoicQuote.textContent = `"${getRandomQuote()}"`
+        stoicQuoteDiv.appendChild(stoicQuote)
+        mainTextDiv.appendChild(stoicQuoteDiv)
+    }
 
     mainContentDiv.appendChild(mainTextDiv)
 

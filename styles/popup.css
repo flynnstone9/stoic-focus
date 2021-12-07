@@ -65,6 +65,9 @@ body {
 
 .url__link {
     color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 275px;
 }
 
 *:focus,

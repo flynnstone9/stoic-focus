@@ -85,7 +85,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                     e.preventDefault()
 
                     let updatedSites = sites.filter((s) => s !== sites[i])
-                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
+                    chrome.storage.sync.set({ sites: updatedSites }, function () { })
 
                     window.close()
                 }
@@ -109,7 +109,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             statusDivSpan.textContent = 'not active'
             statusDiv.appendChild(statusDivSpan)
 
-            let urlLink = document.createElement('span')
+            let urlLink = document.createElement('div')
             urlLink.classList = 'url__link'
             urlLink.textContent = `${tablink}`
 
@@ -142,7 +142,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 }
 
                 sites.push(newSite)
-                chrome.storage.sync.set({ sites: sites }, function () {})
+                chrome.storage.sync.set({ sites: sites }, function () { })
 
                 window.close()
             }

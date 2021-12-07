@@ -1,10 +1,12 @@
 TODO:
 - regex support full domains and subdomains with 1 add...
-- turn quotes off
-- hide page fully, turn off transparency
 - msg only mode...
 - when change options, make save btn change colors so a person clicks
 - specific settings per msg (i.e some full page, some 3 secs, some 10 secs..)
+- delete individual messages
+
+- bug: margin or padding on some sites aligns stoic focus message down (website: scro)
+- new tab mode - displays stoic quote and image on homescreen (says how lond you have avoided sites)
 
 - port to safari
 - chrome manifest v3? does this work for firefox? safari?

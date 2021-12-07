@@ -7,6 +7,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
                     fullscreen: false,
                     timer: 10,
                     closePopupBeforeTimer: true,
+                    opaque: false,
+                    stoicQuotes: true,
                 },
             },
             () => {
@@ -52,7 +54,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
                     let updatedSites = sites.map((s) => (s.url === site.url ? updatedSite : s))
 
-                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
+                    chrome.storage.sync.set({ sites: updatedSites }, function () { })
 
                     chrome.tabs.sendMessage(tabId, { updatedSite, browser, options })
                     return
