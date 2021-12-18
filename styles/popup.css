@@ -1,7 +1,9 @@
 body {
     min-width: 300px;
     background: #222;
-    border: 3px solid #f86fa6;
+    /* border: 3px solid #f86fa6; */
+    /* border-bottom: 2px solid rgb(15, 8, 13); */
+    border: 1px solid #111;
     padding: 20px;
     color: #777;
     font-family: system-ui, sans-serif;
@@ -91,6 +93,18 @@ body {
     color: white;
 }
 
+.input__checkbox {
+    font-family: system-ui, sans-serif;
+    padding: 0.5rem 0.25rem;
+    border-style: solid;
+    border: none;
+    background-color: #222;
+    border: 1px solid #f86fa6;
+    color: rgb(192, 192, 192);
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
 .input__input {
     font-size: 0.8rem;
     /* font-size: max(16px, 1em); */
@@ -120,6 +134,11 @@ input:focus {
     border: 1.5px solid rgb(36, 240, 213);
 }
 
+.button-container {
+    width: fit-content;
+    position: relative;
+}
+
 button {
     display: inline-block;
     padding: 0.3rem 1.65rem;
@@ -144,6 +163,12 @@ button {
     font-size: 0.6rem;
 }
 
+button.btn-small {
+    padding: 0.3rem 0.85rem;
+    /* border: 1px solid #111; */
+    margin-left: 1px;
+}
+
 button:hover,
 button:focus {
     background: #f0b0c9;
@@ -156,6 +181,38 @@ button:focus {
 
 button:active {
     transform: scale(0.99);
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    position: absolute;
+    background: black;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    /* border: 1px solid #111; */
+}
+
+.dropdown-item {
+    /* border: 1px solid #111; */
+    width: 100%;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #333;
+    font: white;
+}
+
+.dropdown-item--active {
+    background-color: #f86fa6;
 }
 
 .options {

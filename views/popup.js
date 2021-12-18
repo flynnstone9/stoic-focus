@@ -5,26 +5,24 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
     let tablink = tab[0].url
 
     //set ui based on if msg set for site already
-    chrome.storage.sync.get('sites', function (data) {
-        let sites = data.sites
+    chrome.storage.sync.get(null, function ({ options, sites }) {
         let isCurrentSiteAlreadyAdded
 
-        let options = document.querySelector('div.options')
-        options.textContent = "Open Extension's Options"
+        let optionsDiv = document.querySelector('div.options')
+        optionsDiv.textContent = "Open Extension's Options"
 
         let manifestData = chrome.runtime.getManifest()
-        console.log(manifestData.version, typeof manifestData.version)
         let versionSpan = document.querySelector('span.version__number')
         versionSpan.innerText = `${manifestData.version}`
 
-        options.addEventListener('click', () => {
+        optionsDiv.addEventListener('click', () => {
             let browser = getBrowser()
             let url = browser !== 'Firefox' ? 'views/options.html' : 'options.html'
             chrome.tabs.create({ url: url })
         })
 
         for (let i = 0; i < sites.length; i++) {
-            let { url, msg, dateCreated, visits } = sites[i]
+            let { url, msg, dateCreated, visits, domainLevelBlock } = sites[i]
             // console.log('looped', url, tablink)
             if (tablink === url) {
                 isCurrentSiteAlreadyAdded = true
@@ -64,6 +62,8 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 let urlSpanLink = buildDiv(url)
                 let dateDiv = buildStatusDiv('Date Created:')
                 let urlDateLink = buildDiv(formatDate(dateCreated))
+                let domainlvlDiv = buildStatusDiv('Domain Lvl:')
+                let urlDomainLvl = buildDiv(domainLevelBlock === true ? 'Domain Lvl' : 'Not Active')
                 let visitsDiv = buildStatusDiv('# of Visits')
                 let urlVisitsLink = buildDiv(visits)
 
@@ -72,6 +72,8 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                 urlDiv.appendChild(urlSpanLink)
                 urlDiv.appendChild(dateDiv)
                 urlDiv.appendChild(urlDateLink)
+                urlDiv.appendChild(domainlvlDiv)
+                urlDiv.appendChild(urlDomainLvl)
                 urlDiv.appendChild(visitsDiv)
                 urlDiv.appendChild(urlVisitsLink)
 
@@ -85,7 +87,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
                     e.preventDefault()
 
                     let updatedSites = sites.filter((s) => s !== sites[i])
-                    chrome.storage.sync.set({ sites: updatedSites }, function () { })
+                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
 
                     window.close()
                 }
@@ -127,29 +129,94 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             input.setAttribute('placeholder', 'Add Message For Site')
             input.classList = 'input__input'
 
+            // let checkboxDomainLvl = document.createElement('input')
+            // checkboxDomainLvl.setAttribute('type', 'checkbox')
+            // checkboxDomainLvl.setAttribute('id', 'domainLevel')
+            // checkboxDomainLvl.setAttribute('name', 'domainLevel')
+            // checkboxDomainLvl.classList = 'input__checkbox'
+
+            let btnsContainer = document.createElement('div')
+            btnsContainer.classList = 'button-container'
+
             let submitBtn = document.createElement('button')
             submitBtn.setAttribute('type', 'submit')
-            submitBtn.innerText = 'Activate'
+            submitBtn.id = 'submitBtn'
+            submitBtn.innerText = `Activate ${options.isPopupBtnDomainLvl ? '(Domain)' : '(Site)'}`
             function submitMsg(e) {
                 e.preventDefault()
                 const currentTime = new Date().toJSON()
+
+                const isDomainLvl = document.getElementById('submitBtn').innerText.includes('DOMAIN')
+
+                console.log('isDomainlvl', isDomainLvl)
 
                 let newSite = {
                     msg: input.value,
                     url: tablink,
                     dateCreated: currentTime,
+                    domainLevelBlock: isDomainLvl,
                     visits: 0,
                 }
 
                 sites.push(newSite)
-                chrome.storage.sync.set({ sites: sites }, function () { })
+                chrome.storage.sync.set({ sites: sites }, function () {})
 
                 window.close()
             }
 
+            let dropDownBtn = document.createElement('button')
+            dropDownBtn.setAttribute('type', 'button')
+            dropDownBtn.classList.add('btn-small')
+            dropDownBtn.innerHTML = '&#x25BC;'
+
+            function openBtnLevelMenu({ target }) {
+                console.log(target)
+                console.log(target.parentElement)
+            }
+
+            let dropdownContainer = document.createElement('div')
+            dropdownContainer.classList = 'dropdown-container'
+
+            let siteLvlDivBtn = document.createElement('div')
+            siteLvlDivBtn.classList = 'dropdown-item'
+            siteLvlDivBtn.id = 'sitelvl'
+            siteLvlDivBtn.textContent = 'Site Lvl'
+            let domainLvlDivBtn = document.createElement('div')
+            domainLvlDivBtn.classList = 'dropdown-item'
+            domainLvlDivBtn.id = 'domainlvl'
+            domainLvlDivBtn.textContent = 'Domain Lvl'
+            // options.isPopupBtnDomainLvl
+            //     ? domainLvlDivBtn.classList.add('dropdown-item--active')
+            //     : siteLvlDivBtn.classList.add('dropdown-item--active')
+
+            function updateBtnLevel({ target }) {
+                console.log(target)
+                const isDomainLvl = target.id === 'domainlvl' ? true : false
+
+                const updatedOptions = {
+                    ...options,
+                    isPopupBtnDomainLvl: isDomainLvl,
+                }
+
+                chrome.storage.sync.set({ options: updatedOptions }, function () {})
+                submitBtn.innerText = `Activate ${isDomainLvl ? '(Domain)' : '(Site)'}`
+            }
+
+            domainLvlDivBtn.addEventListener('click', updateBtnLevel)
+            siteLvlDivBtn.addEventListener('click', updateBtnLevel)
+            dropdownContainer.appendChild(siteLvlDivBtn)
+            dropdownContainer.appendChild(domainLvlDivBtn)
+
             inputDiv.appendChild(input)
-            inputDiv.appendChild(submitBtn)
+            // inputDiv.appendChild(checkboxDomainLvl)
+
+            btnsContainer.appendChild(submitBtn)
             inputDiv.addEventListener('submit', submitMsg)
+            btnsContainer.appendChild(dropDownBtn)
+            dropDownBtn.addEventListener('click', openBtnLevelMenu)
+            btnsContainer.appendChild(dropdownContainer)
+            inputDiv.appendChild(btnsContainer)
+
             exsistingSiteText.appendChild(inputDiv)
             exsistingSiteText.appendChild(status)
             siteInfo.appendChild(exsistingSiteText)

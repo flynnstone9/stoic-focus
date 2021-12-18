@@ -12,7 +12,7 @@ function save_options() {
         timer: timer,
         closePopupBeforeTimer,
         opaque,
-        stoicQuotes
+        stoicQuotes,
     }
 
     chrome.storage.sync.set(
@@ -24,6 +24,7 @@ function save_options() {
             const status = document.getElementById('status')
             status.textContent = 'Options saved.'
             status.classList = ''
+            document.getElementById('save').classList.remove('options__btn--save')
             setTimeout(function () {
                 status.classList = 'hidden'
             }, 1550)
@@ -61,7 +62,6 @@ function reset_messages() {
 }
 
 function delete_message(siteURL, siteDiv) {
-
     const confirmDestroy = window.confirm('Are you sure you want to delete this msg?')
 
     if (confirmDestroy) {
@@ -88,6 +88,16 @@ function restore_options() {
         document.getElementById('opaque').checked = options.opaque
         document.getElementById('stoicQuotes').checked = options.stoicQuotes
 
+        const allInputs = document.querySelectorAll('input[type="checkbox"]')
+        let allInputsArray = [...allInputs]
+        console.log(allInputsArray)
+
+        allInputsArray.forEach((input) => {
+            input.addEventListener('change', () => {
+                document.getElementById('save').classList.add('options__btn--save')
+            })
+        })
+
         let siteListContainer = document.getElementById('options__popups__siteList')
         let siteListTable = document.getElementById('options__popups__siteList__table')
         let headerText = document.createElement('span')
@@ -108,10 +118,9 @@ function restore_options() {
 
             //populates the list of current messages
             sites.forEach((site) => {
-                let { dateCreated, msg, url, visits } = site
+                let { dateCreated, msg, url, visits, domainLevelBlock } = site
                 let siteDiv = document.createElement('div')
                 siteDiv.classList = 'options__popups_sitelist__li'
-
 
                 let urlDiv = document.createElement('div')
                 urlDiv.textContent = url
@@ -119,21 +128,26 @@ function restore_options() {
 
                 let msgDiv = document.createElement('div')
                 msgDiv.textContent = msg
-                msgDiv.classList = 'options__popups_sitelist__li__msg'
+                msgDiv.classList = 'options__popups_sitelist__li__msg no-margin-top'
 
                 let visitsDiv = document.createElement('div')
-                visitsDiv.textContent = `Visits: ${visits}`
+                visitsDiv.textContent = `visits: ${visits}`
+
+                let domainLvlDiv = document.createElement('div')
+                domainLvlDiv.textContent = `${domainLevelBlock ? 'domain lvl' : 'site lvl'}`
 
                 let dateCreatedDiv = document.createElement('div')
                 dateCreatedDiv.textContent = formatDate(dateCreated)
 
                 let deleteBtn = document.createElement('button')
                 deleteBtn.textContent = 'Delete'
+                deleteBtn.classList = 'no-margin-top small-margin-bottom'
                 deleteBtn.addEventListener('click', () => delete_message(url, siteDiv))
 
                 siteDiv.appendChild(urlDiv)
                 siteDiv.appendChild(msgDiv)
                 siteDiv.appendChild(visitsDiv)
+                siteDiv.appendChild(domainLvlDiv)
                 siteDiv.appendChild(dateCreatedDiv)
                 siteDiv.appendChild(deleteBtn)
                 siteListTable.appendChild(siteDiv)

@@ -1,10 +1,17 @@
 TODO:
+//domain lvl not working
+GOING TO MAKE A TWO PART DROPDOWN BUTTON FOR URL LVL VS DOMAIN LVL
+- when on domain lvl should the deactive btn be on everypage? yes... but site lvl over domain lvl
 - bug: margin or padding on some sites aligns stoic focus message down (website: scro)
-- when change options, make save btn change colors so a person clicks
-- specific settings per msg (i.e some full page, some 3 secs, some 10 secs..)
+- bug: long urls within the actual message popup overlays on smaller window sizes
+- remove: conosle.logs
 
-- regex support full domains and subdomains with 1 add...
-- new tab mode - displays stoic quote and image on homescreen (says how lond you have avoided sites)
+- minimal mode / strict mode
+
+- specific settings per msg (i.e some full page, some 3 secs, some 10 secs..)
+- make a separate site that allows people to add sponsers and setup timed or one time emails for their success
+- new tab mode - displays stoic quote and image on homescreen (says how long you have avoided sites)
+- custom options btn styles too - swift to toggles
 
 - port to safari
 - chrome manifest v3? does this work for firefox? safari?

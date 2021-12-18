@@ -19,8 +19,8 @@
     opacity: 0.95;
 }
 
-.content_stoicFocus--opaque {
-    opacity: 1;
+.content_stoicFocus.content_stoicFocus--opaque {
+    opacity: 1 !important;
 }
 
 .content_stoicFocus__Fullscreen {
