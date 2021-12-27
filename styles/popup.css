@@ -70,7 +70,21 @@ body {
     white-space: nowrap;
     overflow: hidden;
     max-width: 275px;
+    overflow-x: auto;
 }
+
+.url__link::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+/* .url__link::-webkit-scrollbar-track {
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
+}
+
+.url__link::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.9);
+} */
 
 *:focus,
 *:hover {
@@ -131,7 +145,7 @@ body {
 }
 
 input:focus {
-    border: 1.5px solid rgb(36, 240, 213);
+    border: 1px solid rgb(36, 240, 213);
 }
 
 .button-container {
@@ -161,12 +175,17 @@ button {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.6rem;
+    transition: 1s;
 }
 
 button.btn-small {
     padding: 0.3rem 0.85rem;
     /* border: 1px solid #111; */
     margin-left: 1px;
+}
+
+button.btn-wide {
+    padding: 0.3rem 0.85rem;
 }
 
 button:hover,
@@ -197,6 +216,17 @@ button:active {
     text-transform: uppercase;
     font-size: 0.6rem;
     /* border: 1px solid #111; */
+    top: 20px;
+    opacity: 0;
+    transition: 0.4s;
+    pointer-events: none;
+    /* z-index: -1; */
+}
+
+.dropdown-container--active {
+    top: 30px;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .dropdown-item {
@@ -209,6 +239,10 @@ button:active {
 .dropdown-item:hover {
     background-color: #333;
     font: white;
+}
+
+.dropdown-item-text {
+    margin-left: 7px;
 }
 
 .dropdown-item--active {

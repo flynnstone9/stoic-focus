@@ -14,10 +14,14 @@
     <div class="options__body">
         <div class="options__container">
             <div class="options_row bottom__margin--small">
-                <div class="bottom__margin--small">
+                <div class="flex-column bottom__margin--small">
                     <label class="options__label" for="timer">Popup Display Time (seconds) </label>
-                    <input type="number" id="timer" name="timer" />
+                    <input class="options__input" type="number" id="timer" name="timer" />
                 </div>
+                <label>
+                    <span class="options__label">Timer Off</span>
+                    <input type="checkbox" id="timerOff" />
+                </label>
                 <label>
                     <span class="options__label">Full Page Popup</span>
                     <input type="checkbox" id="fullscreen" />
@@ -33,6 +37,10 @@
                 <label>
                     <span class="options__label">Stoic Quotes</span>
                     <input type="checkbox" id="stoicQuotes" />
+                </label>
+                <label>
+                    <span class="options__label">View Counter</span>
+                    <input type="checkbox" id="viewCounter" />
                 </label>
             </div>
             <div class="options_row">

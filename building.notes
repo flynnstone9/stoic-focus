@@ -1,17 +1,16 @@
 TODO:
-//domain lvl not working
-GOING TO MAKE A TWO PART DROPDOWN BUTTON FOR URL LVL VS DOMAIN LVL
-- when on domain lvl should the deactive btn be on everypage? yes... but site lvl over domain lvl
-- bug: margin or padding on some sites aligns stoic focus message down (website: scro)
-- bug: long urls within the actual message popup overlays on smaller window sizes
+- "resolved?" domain lvl not working on first page load?? backgroud script to debug | reddit pages loading it multiple times
+- test: test on major sites... push to limit // firefox test
 - remove: conosle.logs
 
-- minimal mode / strict mode
 
+- research: https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/ | Load content before page
+- view: grab sites favicon
+- view: minimal mode / strict mode / no disappear
+- view: options checkbox styles
 - specific settings per msg (i.e some full page, some 3 secs, some 10 secs..)
 - make a separate site that allows people to add sponsers and setup timed or one time emails for their success
 - new tab mode - displays stoic quote and image on homescreen (says how long you have avoided sites)
-- custom options btn styles too - swift to toggles
 
 - port to safari
 - chrome manifest v3? does this work for firefox? safari?

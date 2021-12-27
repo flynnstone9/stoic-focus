@@ -6,10 +6,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 options: {
                     fullscreen: false,
                     timer: 15,
+                    timerOff: false,
                     closePopupBeforeTimer: true,
                     opaque: false,
                     stoicQuotes: true,
                     isPopupBtnDomainLvl: false,
+                    viewCounter: true,
                 },
             },
             () => {
@@ -44,28 +46,25 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         const domainTablink = getSiteRootDomain(tablink)
 
         chrome.storage.sync.get(null, function ({ sites, options }) {
-            const sortedSites = sites.sort(function (x, y) {
+            let sortedSites = sites.sort(function (a, b) {
                 //moves site lvl before domain lvl
-                return x.domainLevelBlock === y.domainLevelBlock ? 0 : x ? -1 : 1
+                return a.domainLevelBlock - b.domainLevelBlock
             })
 
             for (let i = 0; i < sortedSites.length; i++) {
                 let site = sites[i]
 
                 if (site.domainLevelBlock) {
-                    console.log('is a domain lvl')
-                    console.log(domainTablink, getSiteRootDomain(site.url))
+                    let siteRootDomain = getSiteRootDomain(site.url)
 
-                    if (domainTablink === getSiteRootDomain(site.url)) {
+                    if (domainTablink === siteRootDomain) {
                         const updatedSite = updateSite(sites, site)
-                        sendClientMessage(tabId, { updatedSite, browser, options })
+                        sendClientMessage(tabId, { updatedSite, browser, options, siteRootDomain })
                         return
                     }
                 }
 
                 if (tablink === site.url) {
-                    //add a visit to site
-                    console.log('old check')
                     const updatedSite = updateSite(sites, site)
                     sendClientMessage(tabId, { updatedSite, browser, options })
                     return
@@ -88,7 +87,6 @@ function getBrowser() {
 }
 
 function getSiteRootDomain(url) {
-    // console.log(url, typeof url, 'url passed to get site lvl')
     return url
         .replace('https://', '')
         .replace('http://', '')

@@ -21,80 +21,101 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             chrome.tabs.create({ url: url })
         })
 
-        for (let i = 0; i < sites.length; i++) {
-            let { url, msg, dateCreated, visits, domainLevelBlock } = sites[i]
-            // console.log('looped', url, tablink)
+        const siteLvlSites = sites.filter((site) => site.domainLevelBlock === false)
+        const domainLvlSites = sites.filter((site) => site.domainLevelBlock === true)
+
+        for (let i = 0; i < siteLvlSites.length; i++) {
+            let site = siteLvlSites[i]
+            let { url } = site
             if (tablink === url) {
-                isCurrentSiteAlreadyAdded = true
-                let exsistingSiteText = document.createElement('div')
-                exsistingSiteText.classList = 'siteInfo__container'
-
-                let urlDiv = document.createElement('div')
-                urlDiv.classList = 'url'
-
-                let msgDiv = document.createElement('div')
-                msgDiv.classList = 'msg'
-                let msgDivSpan = document.createElement('span')
-                msgDivSpan.classList = 'url__status url__status--active'
-                msgDivSpan.innerText = `current msg`
-                msgDiv.innerText += `: ${msg}`
-                msgDiv.insertBefore(msgDivSpan, msgDiv.firstChild)
-
-                let buildStatusDiv = (text) => {
-                    let statusDiv = document.createElement('div')
-                    statusDiv.classList = 'url__status'
-                    let statusDivSpan = document.createElement('span')
-                    statusDivSpan.classList = 'url__status--active'
-                    statusDivSpan.textContent = `${text}`
-                    statusDiv.appendChild(statusDivSpan)
-                    return statusDiv
-                }
-
-                let activeDiv = buildStatusDiv('active:')
-
-                let buildDiv = (text) => {
-                    let urlLink = document.createElement('div')
-                    urlLink.classList = 'url__link'
-                    urlLink.textContent = `${text}`
-                    return urlLink
-                }
-
-                let urlSpanLink = buildDiv(url)
-                let dateDiv = buildStatusDiv('Date Created:')
-                let urlDateLink = buildDiv(formatDate(dateCreated))
-                let domainlvlDiv = buildStatusDiv('Domain Lvl:')
-                let urlDomainLvl = buildDiv(domainLevelBlock === true ? 'Domain Lvl' : 'Not Active')
-                let visitsDiv = buildStatusDiv('# of Visits')
-                let urlVisitsLink = buildDiv(visits)
-
-                urlDiv.appendChild(msgDiv)
-                urlDiv.appendChild(activeDiv)
-                urlDiv.appendChild(urlSpanLink)
-                urlDiv.appendChild(dateDiv)
-                urlDiv.appendChild(urlDateLink)
-                urlDiv.appendChild(domainlvlDiv)
-                urlDiv.appendChild(urlDomainLvl)
-                urlDiv.appendChild(visitsDiv)
-                urlDiv.appendChild(urlVisitsLink)
-
-                exsistingSiteText.appendChild(urlDiv)
-
-                siteInfo.appendChild(exsistingSiteText)
-
-                let deleteBtn = document.createElement('button')
-                deleteBtn.innerText = 'Deactivate'
-                deleteBtn.onclick = function (e) {
-                    e.preventDefault()
-
-                    let updatedSites = sites.filter((s) => s !== sites[i])
-                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
-
-                    window.close()
-                }
-
-                siteInfo.appendChild(deleteBtn)
+                let updatedSites = sites.filter((s) => s !== site)
+                buildActivePopup(site, updatedSites)
                 return
             }
+        }
+
+        for (let i = 0; i < domainLvlSites.length; i++) {
+            let site = domainLvlSites[i]
+            let { url } = site
+
+            if (getSiteRootDomain(tablink) === getSiteRootDomain(url)) {
+                let updatedSites = sites.filter((s) => s !== site)
+                buildActivePopup(site, updatedSites, getSiteRootDomain(tablink))
+                return
+            }
+        }
+
+        function buildActivePopup(site, updatedSites, domainUrl) {
+            let { url, msg, dateCreated, visits, domainLevelBlock } = site
+
+            isCurrentSiteAlreadyAdded = true
+            let exsistingSiteText = document.createElement('div')
+            exsistingSiteText.classList = 'siteInfo__container'
+
+            let urlDiv = document.createElement('div')
+            urlDiv.classList = 'url'
+
+            let msgDiv = document.createElement('div')
+            msgDiv.classList = 'msg'
+            let msgDivSpan = document.createElement('span')
+            msgDivSpan.classList = 'url__status url__status--active'
+            msgDivSpan.innerText = `current msg:`
+            msgDiv.innerText += ` ${msg}`
+            msgDiv.insertBefore(msgDivSpan, msgDiv.firstChild)
+
+            let buildStatusDiv = (text) => {
+                let statusDiv = document.createElement('div')
+                statusDiv.classList = 'url__status'
+                let statusDivSpan = document.createElement('span')
+                statusDivSpan.classList = 'url__status--active'
+                statusDivSpan.textContent = `${text}`
+                statusDiv.appendChild(statusDivSpan)
+                return statusDiv
+            }
+
+            let activeDiv = buildStatusDiv('active:')
+
+            let buildDiv = (text) => {
+                let urlLink = document.createElement('div')
+                urlLink.classList = 'url__link'
+                urlLink.textContent = `${text}`
+                return urlLink
+            }
+
+            let urlSpanLink = buildDiv(domainUrl ? domainUrl : url)
+            let dateDiv = buildStatusDiv('Date Created:')
+            let urlDateLink = buildDiv(formatDate(dateCreated))
+            let domainlvlDiv = buildStatusDiv('Lvl:')
+            let urlDomainLvl = buildDiv(domainLevelBlock === true ? 'Domain Lvl' : 'Site Lvl')
+            let visitsDiv = buildStatusDiv('# of Visits')
+            let urlVisitsLink = buildDiv(visits)
+
+            urlDiv.appendChild(msgDiv)
+            urlDiv.appendChild(activeDiv)
+            urlDiv.appendChild(urlSpanLink)
+            urlDiv.appendChild(dateDiv)
+            urlDiv.appendChild(urlDateLink)
+            urlDiv.appendChild(domainlvlDiv)
+            urlDiv.appendChild(urlDomainLvl)
+            urlDiv.appendChild(visitsDiv)
+            urlDiv.appendChild(urlVisitsLink)
+
+            exsistingSiteText.appendChild(urlDiv)
+
+            siteInfo.appendChild(exsistingSiteText)
+
+            let deleteBtn = document.createElement('button')
+            deleteBtn.innerText = 'Deactivate'
+            deleteBtn.onclick = function (e) {
+                e.preventDefault()
+
+                chrome.storage.sync.set({ sites: updatedSites }, function () {})
+
+                window.close()
+            }
+
+            siteInfo.appendChild(deleteBtn)
+            return
         }
 
         if (!isCurrentSiteAlreadyAdded) {
@@ -148,8 +169,6 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
 
                 const isDomainLvl = document.getElementById('submitBtn').innerText.includes('DOMAIN')
 
-                console.log('isDomainlvl', isDomainLvl)
-
                 let newSite = {
                     msg: input.value,
                     url: tablink,
@@ -169,29 +188,38 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
             dropDownBtn.classList.add('btn-small')
             dropDownBtn.innerHTML = '&#x25BC;'
 
-            function openBtnLevelMenu({ target }) {
-                console.log(target)
-                console.log(target.parentElement)
-            }
-
             let dropdownContainer = document.createElement('div')
             dropdownContainer.classList = 'dropdown-container'
+            // dropdownContainer.classList = 'dropdown-container--hidden'
 
             let siteLvlDivBtn = document.createElement('div')
             siteLvlDivBtn.classList = 'dropdown-item'
             siteLvlDivBtn.id = 'sitelvl'
-            siteLvlDivBtn.textContent = 'Site Lvl'
+            let siteLvlSpan = document.createElement('span')
+            siteLvlSpan.classList = 'dropdown-item-text'
+            siteLvlSpan.textContent = 'Site Lvl'
+            siteLvlDivBtn.append(siteLvlSpan)
             let domainLvlDivBtn = document.createElement('div')
             domainLvlDivBtn.classList = 'dropdown-item'
             domainLvlDivBtn.id = 'domainlvl'
-            domainLvlDivBtn.textContent = 'Domain Lvl'
+            let domainLvlSpan = document.createElement('span')
+            domainLvlSpan.classList = 'dropdown-item-text'
+            domainLvlSpan.textContent = 'Domain Lvl'
+            domainLvlDivBtn.append(domainLvlSpan)
             // options.isPopupBtnDomainLvl
             //     ? domainLvlDivBtn.classList.add('dropdown-item--active')
             //     : siteLvlDivBtn.classList.add('dropdown-item--active')
 
+            function openBtnLevelMenu() {
+                if (dropdownContainer.classList.contains('dropdown-container--active')) {
+                    dropdownContainer.classList.remove('dropdown-container--active')
+                } else {
+                    dropdownContainer.classList.add('dropdown-container--active')
+                }
+            }
+
             function updateBtnLevel({ target }) {
-                console.log(target)
-                const isDomainLvl = target.id === 'domainlvl' ? true : false
+                const isDomainLvl = (target.id || target.parentNode.id) === 'domainlvl' ? true : false
 
                 const updatedOptions = {
                     ...options,
@@ -200,6 +228,7 @@ chrome.tabs.query({ active: true, currentWindow: true, lastFocusedWindow: true }
 
                 chrome.storage.sync.set({ options: updatedOptions }, function () {})
                 submitBtn.innerText = `Activate ${isDomainLvl ? '(Domain)' : '(Site)'}`
+                dropdownContainer.classList.remove('dropdown-container--active')
             }
 
             domainLvlDivBtn.addEventListener('click', updateBtnLevel)
@@ -246,4 +275,15 @@ function getBrowser() {
     } else {
         return 'Edge'
     }
+}
+
+function getSiteRootDomain(url) {
+    return url
+        .replace('https://', '')
+        .replace('http://', '')
+        .replace('www.', '')
+        .split('.')
+        .splice(0, 2)
+        .join('.')
+        .split('/')[0]
 }

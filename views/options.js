@@ -2,17 +2,21 @@ import formatDate from '../services/formatDate.js'
 // Saves options to chrome.storage
 function save_options() {
     const timer = document.getElementById('timer').value
+    const timerOff = document.getElementById('timerOff').checked
     const fullscreen = document.getElementById('fullscreen').checked
     const closePopupBeforeTimer = document.getElementById('closePopupBeforeTimer').checked
     const opaque = document.getElementById('opaque').checked
     const stoicQuotes = document.getElementById('stoicQuotes').checked
+    const viewCounter = document.getElementById('viewCounter').checked
 
     const usersOptions = {
         fullscreen,
-        timer: timer,
+        timer: timer > 10000000 ? 10000000 : timer,
+        timerOff: timerOff,
         closePopupBeforeTimer,
         opaque,
         stoicQuotes,
+        viewCounter,
     }
 
     chrome.storage.sync.set(
@@ -80,17 +84,17 @@ function delete_message(siteURL, siteDiv) {
 // stored in chrome.storage.
 function restore_options() {
     chrome.storage.sync.get(null, function ({ options, sites }) {
-        // console.log(options, 'options', sites, 'sites')
         document.getElementById('timer').value = options.timer
         document.getElementById('timer').placeholder = 'Add Display Time'
+        document.getElementById('timerOff').checked = options.timerOff
         document.getElementById('fullscreen').checked = options.fullscreen
         document.getElementById('closePopupBeforeTimer').checked = options.closePopupBeforeTimer
         document.getElementById('opaque').checked = options.opaque
         document.getElementById('stoicQuotes').checked = options.stoicQuotes
+        document.getElementById('viewCounter').checked = options.viewCounter
 
         const allInputs = document.querySelectorAll('input[type="checkbox"]')
         let allInputsArray = [...allInputs]
-        console.log(allInputsArray)
 
         allInputsArray.forEach((input) => {
             input.addEventListener('change', () => {

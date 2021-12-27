@@ -5,7 +5,8 @@
 .content_stoicFocus {
     background: #222;
     display: flex;
-    position: fixed;
+    position: sticky;
+    top: 0;
     margin: 0 auto;
     box-sizing: border-box;
     left: 0;
@@ -13,7 +14,8 @@
     max-width: 100%;
     font-size: 16px;
     font-family: system-ui, sans-serif;
-    border: 3px solid #f86fa6;
+    /* border: 3px solid #111;
+    border-color: #111; */
     color: #777;
     z-index: 2147483647 !important;
     opacity: 0.95;
@@ -51,13 +53,23 @@
 }
 
 .content__sf__txt__msg {
+    margin-top: 9px;
     font-size: 1.5em;
     color: #f86fa6;
 }
 
 .content__sf__txt__site {
     margin: 5px 0px;
-    font-size: 0.8em;
+    font-size: 0.7em;
+    opacity: 0.5;
+    overflow: hidden;
+    overflow-x: auto;
+    display: none;
+}
+
+.content__sf__txt__site::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
 }
 
 .content__sf__counterDiv {
@@ -120,14 +132,17 @@
     width: 0;
     height: 0;
     border-top: 15px solid transparent;
-    border-left: 15px solid #f86fa6;
+    border-left: 15px solid #f5689f;
     border-bottom: 15px solid transparent;
     opacity: 0.9;
     margin-top: 11px;
+    /* margin-left: -2px; */
 }
 
 .footer__div {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .footer__div__Fullscreen {
@@ -136,12 +151,12 @@
 
 .close__btn {
     display: inline-block;
-    padding: 0.3em 1.65em 0.3em calc(1.65em - 3px);
+    /* padding: 0.3em 1.65em 0.3em calc(1.65em - 3px); */
     border: 2px;
     margin: 0;
     text-decoration: none;
-    background: #f86fa6;
-    color: #111;
+    /* background: #f86fa6; */
+    /* color: #111; */
     cursor: pointer;
     text-align: center;
     transition: background 250ms ease-in-out, transform 150ms ease;
@@ -154,8 +169,8 @@
 }
 
 .content_stoicfocus_img {
-    width: 128px !important;
-    height: 128px !important;
+    width: 108px !important;
+    height: 108px !important;
 }
 
 .content__sf__stoicquote__div {
@@ -163,7 +178,7 @@
 }
 
 .content__sf__stoicquote__quote {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-style: italic;
     color: darkgrey;
 }
