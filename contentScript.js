@@ -3,7 +3,7 @@
 // chrome.webNavigation.onCommitted
 
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
-    document.body.style.display = 'none'
+    // document.body.style.display = 'none'
     let alreadyLoaded = document.getElementsByClassName('content_stoicFocus')[0]
     if (alreadyLoaded) {
         return
@@ -105,9 +105,11 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
 
     let msgTime = options.timer
     if (!options.timerOff) {
+        console.log('timer off false - running build of timers')
         let timer = setInterval(myTimer, 1000)
         function myTimer() {
             if (msgTime <= 0) {
+                console.log(msgTime)
                 clearInterval(timer)
             }
 
@@ -133,6 +135,9 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
         closeBtn.onclick = function (e) {
             e.preventDefault()
             msgDiv.style.display = 'none'
+            if (options.fullscreen) {
+                body.style.overflow = 'initial'
+            }
         }
 
         footerDiv.appendChild(closeBtn)
@@ -149,13 +154,23 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     msgDiv.appendChild(msgInnerDiv)
     body.prepend(msgDiv)
 
-    setTimeout(() => {
-        msgDiv.classList.add('content_stoicFocus__hidden')
+    if (options.fullscreen) {
+        body.style.overflow = 'hidden'
+    }
+
+    if (!options.timerOff) {
         setTimeout(() => {
-            msgDiv.style.display = 'none'
-        }, 2000)
-    }, msgTime * 1000)
-    document.body.style.display = 'unset'
+            msgDiv.classList.add('content_stoicFocus__hidden')
+            if (options.fullscreen) {
+                body.style.overflow = 'initial'
+            }
+            setTimeout(() => {
+                msgDiv.style.display = 'none'
+            }, 2000)
+        }, msgTime * 1000)
+    }
+
+    // document.body.style.display = 'unset'
 })
 
 function formatDate(date) {

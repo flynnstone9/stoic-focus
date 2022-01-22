@@ -1,10 +1,5 @@
 TODO:
-- "resolved?" domain lvl not working on first page load?? backgroud script to debug | reddit pages loading it multiple times
-- test: test on major sites... push to limit // firefox test
-- remove: conosle.logs
-
-
-- research: https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/ | Load content before page
+- research: https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/ | Load content before page loads
 - view: grab sites favicon
 - view: minimal mode / strict mode / no disappear
 - view: options checkbox styles
