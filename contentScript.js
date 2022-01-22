@@ -105,11 +105,9 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
 
     let msgTime = options.timer
     if (!options.timerOff) {
-        console.log('timer off false - running build of timers')
         let timer = setInterval(myTimer, 1000)
         function myTimer() {
             if (msgTime <= 0) {
-                console.log(msgTime)
                 clearInterval(timer)
             }
 
