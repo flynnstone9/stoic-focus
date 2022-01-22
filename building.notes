@@ -1,10 +1,11 @@
 TODO:
-- regex support full domains and subdomains with 1 add...
-- turn quotes off
-- hide page fully, turn off transparency
-- msg only mode...
-- when change options, make save btn change colors so a person clicks
+- research: https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/ | Load content before page loads
+- view: grab sites favicon
+- view: minimal mode / strict mode / no disappear
+- view: options checkbox styles
 - specific settings per msg (i.e some full page, some 3 secs, some 10 secs..)
+- make a separate site that allows people to add sponsers and setup timed or one time emails for their success
+- new tab mode - displays stoic quote and image on homescreen (says how long you have avoided sites)
 
 - port to safari
 - chrome manifest v3? does this work for firefox? safari?

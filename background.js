@@ -5,8 +5,13 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 sites: [],
                 options: {
                     fullscreen: false,
-                    timer: 10,
+                    timer: 15,
+                    timerOff: false,
                     closePopupBeforeTimer: true,
+                    opaque: false,
+                    stoicQuotes: true,
+                    isPopupBtnDomainLvl: false,
+                    viewCounter: true,
                 },
             },
             () => {
@@ -37,24 +42,31 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
     if (changeInfo.status == 'complete' && tab.active) {
         //check if site matches notes sites
-        let tablink = tab.url
+        const tablink = tab.url
+        const domainTablink = getSiteRootDomain(tablink)
 
         chrome.storage.sync.get(null, function ({ sites, options }) {
-            for (let i = 0; i < sites.length; i++) {
+            let sortedSites = sites.sort(function (a, b) {
+                //moves site lvl before domain lvl
+                return a.domainLevelBlock - b.domainLevelBlock
+            })
+
+            for (let i = 0; i < sortedSites.length; i++) {
                 let site = sites[i]
 
-                if (tablink === site.url) {
-                    //add a visit to site
-                    let updatedSite = {
-                        ...site,
-                        visits: site.visits + 1,
+                if (site.domainLevelBlock) {
+                    let siteRootDomain = getSiteRootDomain(site.url)
+
+                    if (domainTablink === siteRootDomain) {
+                        const updatedSite = updateSite(sites, site)
+                        sendClientMessage(tabId, { updatedSite, browser, options, siteRootDomain })
+                        return
                     }
+                }
 
-                    let updatedSites = sites.map((s) => (s.url === site.url ? updatedSite : s))
-
-                    chrome.storage.sync.set({ sites: updatedSites }, function () {})
-
-                    chrome.tabs.sendMessage(tabId, { updatedSite, browser, options })
+                if (tablink === site.url) {
+                    const updatedSite = updateSite(sites, site)
+                    sendClientMessage(tabId, { updatedSite, browser, options })
                     return
                 }
             }
@@ -72,4 +84,30 @@ function getBrowser() {
     } else {
         return 'Edge'
     }
+}
+
+function getSiteRootDomain(url) {
+    return url
+        .replace('https://', '')
+        .replace('http://', '')
+        .replace('www.', '')
+        .split('.')
+        .splice(0, 2)
+        .join('.')
+        .split('/')[0]
+}
+
+function updateSite(sites, site) {
+    const updatedSite = {
+        ...site,
+        visits: site.visits + 1,
+    }
+
+    let updatedSites = sites.map((s) => (s.url === site.url ? updatedSite : s))
+    chrome.storage.sync.set({ sites: updatedSites }, function () {})
+    return updatedSite
+}
+
+function sendClientMessage(tabId, message) {
+    chrome.tabs.sendMessage(tabId, message)
 }

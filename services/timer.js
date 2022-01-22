@@ -1,5 +1,3 @@
-console.log('timer in the iframe cool')
-
 // ;(function () {
 //     let msgTime = 10
 //     let timer = setInterval(myTimer, 1000)

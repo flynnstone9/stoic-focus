@@ -1,17 +1,24 @@
 //runs on client every page load
 //listens for matching sites on chrome side // changes page for 10 seconds w message if match
+// chrome.webNavigation.onCommitted
+
 chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
+    // document.body.style.display = 'none'
     let alreadyLoaded = document.getElementsByClassName('content_stoicFocus')[0]
     if (alreadyLoaded) {
         return
     }
 
-    let { updatedSite, browser, options } = req
+    let { updatedSite, browser, options, siteRootDomain } = req
 
     let body = document.querySelector('body')
 
     let msgDiv = document.createElement('div')
     msgDiv.classList = 'content_stoicFocus'
+
+    if (options.opaque) {
+        msgDiv.classList.add('content_stoicFocus--opaque')
+    }
 
     let imgDiv = document.createElement('div')
     imgDiv.style.display = 'flex'
@@ -42,23 +49,25 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     let mainTextDivTxtMsg = document.createElement('div')
     mainTextDivTxtMsg.classList = 'content__sf__txt__msg'
     mainTextDivTxtMsg.textContent = `${updatedSite.msg}`
-    let mainTextDivTxtSite = document.createElement('div')
-    mainTextDivTxtSite.classList = 'content__sf__txt__site'
-    mainTextDivTxtSite.textContent = `${updatedSite.url}`
+    // let mainTextDivTxtSite = document.createElement('div')
+    // mainTextDivTxtSite.classList = 'content__sf__txt__site'
+    // mainTextDivTxtSite.textContent = `${siteRootDomain ? siteRootDomain : updatedSite.url}`
     mainTextDiv.appendChild(mainTextDivTxtMsg)
-    mainTextDiv.appendChild(mainTextDivTxtSite)
+    // mainTextDiv.appendChild(mainTextDivTxtSite)
 
-    let stoicQuoteDiv = document.createElement('div')
-    stoicQuoteDiv.classList = 'content__sf__stoicquote__div'
-    let stoicQuote = document.createElement('p')
-    stoicQuote.classList = 'content__sf__stoicquote__quote'
-    stoicQuote.textContent = `"${getRandomQuote()}"`
-    stoicQuoteDiv.appendChild(stoicQuote)
-    mainTextDiv.appendChild(stoicQuoteDiv)
+    if (options.stoicQuotes) {
+        let stoicQuoteDiv = document.createElement('div')
+        stoicQuoteDiv.classList = 'content__sf__stoicquote__div'
+        let stoicQuote = document.createElement('p')
+        stoicQuote.classList = 'content__sf__stoicquote__quote'
+        stoicQuote.textContent = `"${getRandomQuote()}"`
+        stoicQuoteDiv.appendChild(stoicQuote)
+        mainTextDiv.appendChild(stoicQuoteDiv)
+    }
 
     mainContentDiv.appendChild(mainTextDiv)
 
-    if (browser !== 'Firefox') {
+    if (browser !== 'Firefox' && options.viewCounter) {
         let counterDiv = document.createElement('div')
         counterDiv.classList = 'content__sf__counterDiv'
 
@@ -95,20 +104,22 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     timerDiv.classList = 'content__sf__timer'
 
     let msgTime = options.timer
-    let timer = setInterval(myTimer, 1000)
-    function myTimer() {
-        if (msgTime <= 0) {
-            clearInterval(timer)
+    if (!options.timerOff) {
+        let timer = setInterval(myTimer, 1000)
+        function myTimer() {
+            if (msgTime <= 0) {
+                clearInterval(timer)
+            }
+
+            let timerElement = document.getElementsByClassName('content__sf__timer')[0]
+            timerElement.textContent = 'Disappearing in '
+            let timerSpan = document.createElement('span')
+            timerSpan.classList = 'content__sf__timer__time'
+            timerSpan.textContent = `${msgTime} seconds`
+            timerElement.appendChild(timerSpan)
+
+            msgTime--
         }
-
-        let timerElement = document.getElementsByClassName('content__sf__timer')[0]
-        timerElement.textContent = 'Disappearing in '
-        let timerSpan = document.createElement('span')
-        timerSpan.classList = 'content__sf__timer__time'
-        timerSpan.textContent = `${msgTime} seconds`
-        timerElement.appendChild(timerSpan)
-
-        msgTime--
     }
 
     let footerDiv = document.createElement('div')
@@ -122,6 +133,9 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
         closeBtn.onclick = function (e) {
             e.preventDefault()
             msgDiv.style.display = 'none'
+            if (options.fullscreen) {
+                body.style.overflow = 'initial'
+            }
         }
 
         footerDiv.appendChild(closeBtn)
@@ -138,12 +152,23 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendRes) => {
     msgDiv.appendChild(msgInnerDiv)
     body.prepend(msgDiv)
 
-    setTimeout(() => {
-        msgDiv.classList.add('content_stoicFocus__hidden')
+    if (options.fullscreen) {
+        body.style.overflow = 'hidden'
+    }
+
+    if (!options.timerOff) {
         setTimeout(() => {
-            msgDiv.style.display = 'none'
-        }, 2000)
-    }, msgTime * 1000)
+            msgDiv.classList.add('content_stoicFocus__hidden')
+            if (options.fullscreen) {
+                body.style.overflow = 'initial'
+            }
+            setTimeout(() => {
+                msgDiv.style.display = 'none'
+            }, 2000)
+        }, msgTime * 1000)
+    }
+
+    // document.body.style.display = 'unset'
 })
 
 function formatDate(date) {
