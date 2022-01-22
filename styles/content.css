@@ -27,7 +27,11 @@
 
 .content_stoicFocus__Fullscreen {
     height: 100vh;
+<<<<<<< HEAD
     position: fixed;
+=======
+    position: absolute;
+>>>>>>> dbb339354481c0adb5c82e6ff27b64f59a608048
 }
 
 .content_stoicFocus__hidden {
